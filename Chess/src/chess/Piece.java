@@ -10,7 +10,7 @@ public abstract class Piece {
         _isWhite = isWhite;
     }
 
-    public abstract boolean isValidMove(Square destination);
+    public abstract boolean isValidMove(Square destination, Piece[][] board);
 
     public void move(Square destination) {
         if (isValidMove(destination))
