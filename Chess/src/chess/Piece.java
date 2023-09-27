@@ -8,6 +8,7 @@ public abstract class Piece {
     private Square _position;
     private boolean _isWhite;
     private boolean _hasMoved = false;
+    private boolean[][] validMoves;
 
     /** Creates a new piece with the desired position and color. */
     public Piece(Square position, boolean isWhite) {
@@ -16,13 +17,15 @@ public abstract class Piece {
     }
 
     /** Returns whether or not moving the piece to the given destination would be valid. 
-     * This should be overriden by all base classes.
     */
     public boolean isValidMove(Square destination)
     {
-        Piece piece = Board.getPosition(destination);
-        return piece == null || (piece.isWhite() != _isWhite);
+        return validMoves[destination.getFile()][destination.getRank()];
+        // Piece piece = Board.getPosition(destination);
+        // return piece == null || (piece.isWhite() != _isWhite);
     }
+
+    public abstract void updateValidMoves();
 
     /** Moves the piece to the given destination if valid. */
     public void move(Square destination) {
