@@ -15,8 +15,14 @@ public abstract class Piece {
         _isWhite = isWhite;
     }
 
-    /** Returns whether or not moving the piece to the given destination would be valid. */
-    public abstract boolean isValidMove(Square destination);
+    /** Returns whether or not moving the piece to the given destination would be valid. 
+     * This should be overriden by all base classes.
+    */
+    public boolean isValidMove(Square destination)
+    {
+        Piece piece = Board.getPosition(destination);
+        return piece == null || (piece.isWhite() != _isWhite);
+    }
 
     /** Moves the piece to the given destination if valid. */
     public void move(Square destination) {
@@ -26,4 +32,7 @@ public abstract class Piece {
             _hasMoved = true;
         }
     }
+
+    /** Returns whether or not the piece is white. */
+    public boolean isWhite() { return _isWhite; }
 }

@@ -6,4 +6,9 @@ public class Board {
     public void move(Square start, Square end) {
         continue;
     }
+
+    public Piece getPosition(Square position)
+    {
+        return Board[position.getFile()][position.getRank()];
+    }
 }
