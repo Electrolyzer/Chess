@@ -12,8 +12,8 @@ public class Pawn extends Piece {
         int direction = isWhite() ? 1 : -1;
         
         validMoves[getFile()][getRank()+direction] = (null == (Board.Board[getFile()][getRank()+direction]));
-        validMoves[getFile()+1][getRank()+direction] =  isWhite() != (Board.Board[getFile()][getRank()+direction]).isWhite();
-        
+        validMoves[getFile()+1][getRank()+direction] =  isWhite() != (Board.Board[getFile()+1][getRank()+direction]).isWhite();
+        validMoves[getFile()-1][getRank()+direction] =  isWhite() != (Board.Board[getFile()-1][getRank()+direction]).isWhite();
     }
     
 }
