@@ -4,7 +4,7 @@ public class Board {
     public Piece[][] Board;
 
     public void move(Square start, Square end) {
-        continue;
+        return;
     }
 
     public Piece getPosition(Square position)

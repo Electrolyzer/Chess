@@ -33,6 +33,9 @@ public abstract class Piece {
         }
     }
 
+    /** Returns the position of the piece. */
+    protected Square getPosition() { return _position; }
+
     /** Returns whether or not the piece is white. */
     public boolean isWhite() { return _isWhite; }
 }
