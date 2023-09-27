@@ -8,7 +8,7 @@ public abstract class Piece {
     private Square _position;
     private boolean _isWhite;
     private boolean _hasMoved = false;
-    private boolean[][] validMoves;
+    protected boolean[][] validMoves;
 
     /** Creates a new piece with the desired position and color. */
     public Piece(Square position, boolean isWhite) {

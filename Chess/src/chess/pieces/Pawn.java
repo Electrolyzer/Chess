@@ -8,21 +8,12 @@ public class Pawn extends Piece {
         super(position, isWhite);
     }
 
-    public boolean isValidMove(Square destination){
-
-        if(!super.isValidMove(destination)) return false;
-        if(
-            this.getPosition().getFile() - destination.getFile() == 0 &&
-            this.getPosition().getRank() - destination.getRank() == 1 &&
-            this.isWhite()
-            ) return true;
-        if(
-            this.getPosition().getFile() - destination.getFile() == 0 &&
-            this.getPosition().getRank() - destination.getRank() == -1 &&
-            !this.isWhite()
-            ) return true;
-
-        return false;
+    public void updateValidMoves(){
+        int direction = isWhite() ? 1 : -1;
+        
+        validMoves[getFile()][getRank()+direction] = (null == (Board.Board[getFile()][getRank()+direction]));
+        validMoves[getFile()+1][getRank()+direction] =  isWhite() != (Board.Board[getFile()][getRank()+direction]).isWhite();
+        
     }
     
 }
