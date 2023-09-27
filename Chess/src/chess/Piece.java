@@ -1,6 +1,8 @@
 package chess;
 
 public abstract class Piece {
+    public static Board Board;
+
     private Square _position;
     private boolean _isWhite;
     private boolean _hasMoved = false;
@@ -10,7 +12,7 @@ public abstract class Piece {
         _isWhite = isWhite;
     }
 
-    public abstract boolean isValidMove(Square destination, Piece[][] board);
+    public abstract boolean isValidMove(Square destination);
 
     public void move(Square destination) {
         if (isValidMove(destination))
