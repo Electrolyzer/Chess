@@ -38,4 +38,7 @@ public abstract class Piece {
 
     /** Returns whether or not the piece is white. */
     public boolean isWhite() { return _isWhite; }
+
+    public int getRank() { return _position.getRank(); }
+    public int getFile() { return _position.getFile(); }
 }
