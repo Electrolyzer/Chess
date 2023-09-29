@@ -1,0 +1,11 @@
+-Switch the validMoves array to an enum type
+
+We need to figure out how to deal with out-of-bounds array accesses on the
+validMoves functions in the various pieces. Do we have to deal woth it every
+time and run an "is position in bounds?" check each time or is there some
+better way to deal with it?
+
+I think the change to a Board type may actually fix this if instead of inputting
+values directly into an array we can call a getter/setter methods that take
+position values (and possibly displacement) and can get/set and return a boolean
+that denotes whether the attempted postion was valid (in bounds)
