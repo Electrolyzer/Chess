@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
-        validMoves = new boolean[8][8]
+        validMoves = new boolean[8][8];
 
         //Check which direction Pawn moves in
         int direction = isWhite() ? 1 : -1;
@@ -37,12 +37,25 @@ public class Pawn extends Piece {
 
     //Transform into the chosen piece when the Pawn reaches the last row
     public void promotePawn(String pieceToBecome){
-        //TODO
+        switch(pieceToBecome){
+            case "Q":
+                Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
+                break;
+            case "N":
+                Board.Board[getFile()][getRank()] = new Knight(getPosition(), isWhite());
+                break;
+            case "B":
+                Board.Board[getFile()][getRank()] = new Bishop(getPosition(), isWhite());
+                break;
+            case "R":
+                Board.Board[getFile()][getRank()] = new Rook(getPosition(), isWhite());
+                break;            
+        }
     }
     
     //If no piece is given to transform into, then transform into a queen
     public void promotePawn(){
-        //TODO
+        Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
     }
 
 }
