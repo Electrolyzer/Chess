@@ -4,6 +4,9 @@ import chess.Square;
 
 public class Pawn extends Piece {
 /** Specific class for Pawns*/
+
+    public boolean Enpessantable = false; 
+
     public Pawn(Square position, boolean isWhite){
         super(position, isWhite);
     }
@@ -24,7 +27,9 @@ public class Pawn extends Piece {
         validMoves[getFile()-1][getRank()+direction] = !isSameColor(Board.Board[getFile()-1][getRank()+direction]);
 
         //First Pawn move option
-        validMoves[getFile()][getRank()+2*direction] = !hasMoved();
+        validMoves[getFile()][getRank()+2*direction] = !hasMoved() && 
+                                                        (null == (Board.Board[getFile()][getRank()+direction])) &&
+                                                        (null == (Board.Board[getFile()][getRank()+2*direction]));
 
         //En passant
         //TODO
