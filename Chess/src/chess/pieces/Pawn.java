@@ -36,20 +36,20 @@ public class Pawn extends Piece {
     }
 
     //Transform into the chosen piece when the Pawn reaches the last row
-    public void promotePawn(String pieceToBecome){
+    public void promotePawn(char pieceToBecome){
         switch(pieceToBecome){
-            case "Q":
-                Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
-                break;
-            case "N":
+            case 'N':
                 Board.Board[getFile()][getRank()] = new Knight(getPosition(), isWhite());
                 break;
-            case "B":
+            case 'B':
                 Board.Board[getFile()][getRank()] = new Bishop(getPosition(), isWhite());
                 break;
-            case "R":
+            case 'R':
                 Board.Board[getFile()][getRank()] = new Rook(getPosition(), isWhite());
-                break;            
+                break;
+            case 'Q':
+                Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
+                break;
         }
     }
     
