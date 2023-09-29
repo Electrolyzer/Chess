@@ -36,6 +36,12 @@ public abstract class Piece {
         }
     }
 
+    /** Returns whether the two pieces being compared are of the same color */
+    protected boolean isSameColor(Piece other){ return isWhite() ^ other.isWhite(); }
+
+    /** Returns whether the piece has moved yet this game */
+    protected boolean hasMoved(){ return _hasMoved; }
+
     /** Returns the position of the piece. */
     protected Square getPosition() { return _position; }
 
