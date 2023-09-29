@@ -11,7 +11,11 @@ public class Knight extends Piece {
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
-        validMoves = new boolean[8][8];
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                validMoves.setPosition(i, j, moveType.INVALID);
+            }    
+        }
 
         //The two for loops iterate the 8 possible directions
         for (int up = -2; up <= 2; up ++) {
@@ -22,11 +26,9 @@ public class Knight extends Piece {
 
                 //Checks whether the space is occupied or has a capturable piece
                 if (null == Board.Board[getFile() + up][getRank() + right]) {
-                    validMoves[getFile() + up][getRank() + right] = true;
-                    continue;
+                    validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
                 } else if (!isSameColor(Board.Board[getFile() + up][getRank() + right])) {
-                    validMoves[getFile() + up][getRank() + right] = true;
-                    break;
+                    validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
                 }
 
             }

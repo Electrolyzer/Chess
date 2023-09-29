@@ -14,22 +14,32 @@ public class Pawn extends Piece {
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
-        validMoves = new boolean[8][8];
-
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                validMoves.setPosition(i, j, moveType.INVALID);
+            }    
+        }
         //Check which direction Pawn moves in
         int direction = isWhite() ? 1 : -1;
         
         //Classic Pawn movement
-        validMoves[getFile()][getRank()+direction] = (null == (Board.Board[getFile()][getRank()+direction]));
+        if((Board.Board[getFile()][getRank()+direction]) == null){
+            validMoves.setPosition(getFile(), getRank()+direction, moveType.VALID);
+        }
 
         //Pawn Capture movement
-        validMoves[getFile()+1][getRank()+direction] = !isSameColor(Board.Board[getFile()+1][getRank()+direction]);
-        validMoves[getFile()-1][getRank()+direction] = !isSameColor(Board.Board[getFile()-1][getRank()+direction]);
+        if (!isSameColor(Board.Board[getFile() + 1][getRank() + direction])) {
+            validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+        }
+        if (!isSameColor(Board.Board[getFile() - 1][getRank() + direction])) {
+            validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+        }
 
-        //First Pawn move option
-        validMoves[getFile()][getRank()+2*direction] = !hasMoved() && 
-                                                        (null == (Board.Board[getFile()][getRank()+direction])) &&
-                                                        (null == (Board.Board[getFile()][getRank()+2*direction]));
+        // First Pawn move option
+        if (!hasMoved() && (null == (Board.Board[getFile()][getRank() + direction])) &&
+                (null == (Board.Board[getFile()][getRank() + 2 * direction]))) {
+            validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
+        }
 
         //En passant
         //TODO

@@ -1,6 +1,7 @@
 package chess;
 import chess.Piece;
 import chess.Square;
+import chess.Piece.moveType;
 import chess.pieces.*;
 
 public class moveParser {
@@ -8,7 +9,7 @@ public class moveParser {
     private moveParser(){
     }
 
-    public static void parse(String moveToParse){
+    public static void parseMove(String moveToParse){
         
         int nextSpace;
         char pieceToBecome = '\0';
@@ -39,16 +40,6 @@ public class moveParser {
                 counter++;
             }
         }
-        
-        //Make sure move is valid before executing
-        if(checkMoveValidity(move)){ 
-            executeMove(move);
-            if(pieceToBecome != '\0'){
-                promotePawn(move[1], pieceToBecome);
-            }
-        }else{
-            //Create message for invalid move
-        }
 
         switch(checkMoveValidity(move)){
             case INVALID:
@@ -59,7 +50,7 @@ public class moveParser {
                 break;
             case CASTLE: 
                 executeMove(move);
-                executeMove(); //TODO Additionally execute rook move 
+                executeMove(move); //TODO Additionally execute rook move 
                 break;
             case ENPASSANT:
                 executeMove(move);
@@ -95,7 +86,7 @@ public class moveParser {
         /*TODO: Need to fix the Dynamic/Static typing issue. Maybe move promotion function into this class?*/
     }
 
-    public static boolean checkMoveValidity(Square[] move){
+    public static moveType checkMoveValidity(Square[] move){
         return Piece.Board.getPosition(move[0]).isValidMove(move[1]);
     }
 }

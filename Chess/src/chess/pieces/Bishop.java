@@ -11,8 +11,11 @@ public class Bishop extends Piece{
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
-        validMoves = new boolean[8][8];
-
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                validMoves.setPosition(i, j, moveType.INVALID);
+            }    
+        }
         int distance = 1;
 
         //The two for loops iterate the 4 possible directions
@@ -23,11 +26,11 @@ public class Bishop extends Piece{
                 //after hitting a piece whether or not it is
                 while (true) {
                     if (null == Board.Board[getFile() + up * distance][getRank() + right * distance]) {
-                        validMoves[getFile() + up * distance][getRank() + right * distance] = true;
+                        validMoves.setPosition(getFile() + up * distance,getRank() + right * distance, moveType.VALID);
                         distance++;
                         continue;
                     } else if (!isSameColor(Board.Board[getFile() + up * distance][getRank() + right * distance])) {
-                        validMoves[getFile() + up * distance][getRank() + right * distance] = true;
+                        validMoves.setPosition(getFile() + up * distance, getRank() + right * distance, moveType.VALID);
                         distance = 1;
                         break;
                     } else {
