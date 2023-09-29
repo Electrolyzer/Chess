@@ -1,17 +1,28 @@
 package chess;
 
-public class Board {
-    public Piece[][] Board;
+public class Board<T> {
+    public T[][] Board;
+
+    public Board(){
+    }
 
     public void move(Square start, Square end) {
         return;
     }
 
-    public Piece getPosition(Square position){
+    public T getPosition(Square position){
         return Board[position.getFile()][position.getRank()];
     }
 
-    public void setPosition(Square position, Piece piece){
-        Board[position.getFile()][position.getRank()] = piece;
+    public T getPosition(int file, int rank){
+        return Board[file][rank];
+    }
+
+    public void setPosition(Square position, T object){
+        Board[position.getFile()][position.getRank()] = object;
+    }
+
+    public void setPosition(int file, int rank, T object){
+        Board[file][rank] = object;
     }
 }

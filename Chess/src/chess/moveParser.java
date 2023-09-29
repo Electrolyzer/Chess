@@ -41,7 +41,7 @@ public class moveParser {
         }
         
         //Make sure move is valid before executing
-        if(checkMoveValidity(move)){
+        if(checkMoveValidity(move)){ 
             executeMove(move);
             if(pieceToBecome != '\0'){
                 promotePawn(move[1], pieceToBecome);
@@ -49,7 +49,27 @@ public class moveParser {
         }else{
             //Create message for invalid move
         }
-        
+
+        switch(checkMoveValidity(move)){
+            case INVALID:
+                //Create message for invalid move
+                break;
+            case VALID:
+                executeMove(move); //Execute move normally
+                break;
+            case CASTLE: 
+                executeMove(move);
+                executeMove(); //TODO Additionally execute rook move 
+                break;
+            case ENPASSANT:
+                executeMove(move);
+                Piece.Board.Board[move[1].getFile()][move[0].getRank()] = null; //Delete the Pawn that was En Passanted
+                break;
+            case PROMOTE:
+                executeMove(move);
+                promotePawn(move[1], pieceToBecome); //Change pawn after movement
+                break;
+        }        
 
     }
 

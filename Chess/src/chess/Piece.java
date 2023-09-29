@@ -3,12 +3,14 @@ package chess;
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
-    public static Board Board = new Board();
+    public static Board<Piece> Board = new Board<Piece>();
 
     private Square _position;
     private boolean _isWhite;
     private boolean _hasMoved = false;
-    protected boolean[][] validMoves;
+
+    public static enum moveType {INVALID, VALID, CASTLE, ENPASSANT, PROMOTE}
+    protected Board<moveType> validMoves;
 
     /** Creates a new piece with the desired position and color. */
     public Piece(Square position, boolean isWhite) {
@@ -18,23 +20,11 @@ public abstract class Piece {
 
     /** Returns whether or not moving the piece to the given destination would be valid. 
     */
-    public boolean isValidMove(Square destination)
-    {
-        return validMoves[destination.getFile()][destination.getRank()];
-        // Piece piece = Board.getPosition(destination);
-        // return piece == null || (piece.isWhite() != _isWhite);
+    public moveType isValidMove(Square destination){
+        return validMoves.getPosition(destination);
     }
 
     public abstract void updateValidMoves();
-
-    /** Moves the piece to the given destination if valid. */
-    public void move(Square destination) {
-        if (isValidMove(destination))
-        {
-            _position = destination;
-            _hasMoved = true;
-        }
-    }
 
     /** Returns whether the two pieces being compared are of the same color */
     protected boolean isSameColor(Piece other){ return isWhite() ^ other.isWhite(); }
