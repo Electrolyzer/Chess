@@ -16,6 +16,10 @@ public class King extends Piece {
                 validMoves.setPosition(i, j, moveType.INVALID);
             }    
         }
+
+        int file;
+        int rank;
+
         // The two for loops iterate the 8 possible directions
         for (int up = -1; up <= 1; up++) {
             for (int right = -1; right <= 1; right++) {
@@ -24,6 +28,11 @@ public class King extends Piece {
                 if (!((right == 0) && (up == 0))) {
                     continue;
                 }
+
+                //Ensures king does not move out of bounds
+                file = getFile() + up;
+                rank = getRank() + right;
+                if(file<0 || file>7 || rank<0 || rank>7){ continue; }
 
                 // Checks each direction for valid movement
                 if (null == Board.Board[getFile() + up][getRank() + right]) {

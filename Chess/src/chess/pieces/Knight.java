@@ -17,6 +17,9 @@ public class Knight extends Piece {
             }    
         }
 
+        int file = 0;
+        int rank = 0;
+
         //The two for loops iterate the 8 possible directions
         for (int up = -2; up <= 2; up ++) {
             for (int right = -2; right <= 2; right ++) {
@@ -24,11 +27,16 @@ public class Knight extends Piece {
                 //Only check for valid moves if the taxicab distance is 3
                 if(!(Math.abs(right)+Math.abs(up)==3)){ continue; }
 
+                //Ensures knight does not move out of bounds
+                file = getFile() + up;
+                rank = getRank() + right;
+                if(file<0 || file>7 || rank<0 || rank>7){ continue; }
+
                 //Checks whether the space is occupied or has a capturable piece
-                if (null == Board.Board[getFile() + up][getRank() + right]) {
-                    validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
-                } else if (!isSameColor(Board.Board[getFile() + up][getRank() + right])) {
-                    validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
+                if (null == Board.Board[file][rank]) {
+                    validMoves.setPosition(file, rank, moveType.VALID);
+                } else if (!isSameColor(Board.Board[file][rank])) {
+                    validMoves.setPosition(file, rank, moveType.VALID);
                 }
 
             }

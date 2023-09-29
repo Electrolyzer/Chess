@@ -17,26 +17,33 @@ public class Bishop extends Piece{
             }    
         }
         int distance = 1;
+        int rank = 0;
+        int file = 0;
 
         //The two for loops iterate the 4 possible directions
         for (int up = -1; up <= 1; up += 2) {
             for (int right = -1; right <= 1; right += 2) {
 
+                file = getFile() + up * distance;
+                rank = getRank() + right * distance;
+
                 //Checks each direction until it hits a piece, then checks whether that piece is capturable but stops
-                //after hitting a piece whether or not it is
-                while (true) {
-                    if (null == Board.Board[getFile() + up * distance][getRank() + right * distance]) {
-                        validMoves.setPosition(getFile() + up * distance,getRank() + right * distance, moveType.VALID);
+                //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds
+                while (0<=rank && rank<8 && 0<=file && file<8) {
+
+                    if (null == Board.Board[file][rank]) {
+                        validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
-                        continue;
-                    } else if (!isSameColor(Board.Board[getFile() + up * distance][getRank() + right * distance])) {
-                        validMoves.setPosition(getFile() + up * distance, getRank() + right * distance, moveType.VALID);
+                    } else if (!isSameColor(Board.Board[file][rank])) {
+                        validMoves.setPosition(file,rank, moveType.VALID);
                         distance = 1;
                         break;
                     } else {
                         distance = 1;
                         break;
                     }
+                    file = getFile() + up * distance;
+                    rank = getRank() + right * distance;
                 }
 
             }

@@ -1,38 +1,43 @@
 package chess.pieces;
+
 import chess.Piece;
 import chess.Square;
 
 public class Pawn extends Piece {
-/** Specific class for Pawns*/
+    /** Specific class for Pawns */
 
-    public boolean Enpessantable = false; 
+    public boolean Enpessantable = false;
 
-    public Pawn(Square position, boolean isWhite){
+    public Pawn(Square position, boolean isWhite) {
         super(position, isWhite);
     }
 
-    public void updateValidMoves(){
+    public void updateValidMoves() {
 
-        //Initialize all moves to invalid
-        for(int i=0;i<8;i++){
-            for(int j=0;j<8;j++){
+        // Initialize all moves to invalid
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 validMoves.setPosition(i, j, moveType.INVALID);
-            }    
+            }
         }
-        //Check which direction Pawn moves in
+        // Check which direction Pawn moves in
         int direction = isWhite() ? 1 : -1;
-        
-        //Classic Pawn movement
-        if((Board.Board[getFile()][getRank()+direction]) == null){
-            validMoves.setPosition(getFile(), getRank()+direction, moveType.VALID);
+
+        // Classic Pawn movement
+        if ((Board.Board[getFile()][getRank() + direction]) == null) {
+            validMoves.setPosition(getFile(), getRank() + direction, moveType.VALID);
         }
 
-        //Pawn Capture movement
-        if (!isSameColor(Board.Board[getFile() + 1][getRank() + direction])) {
-            validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+        // Pawn Capture movement with edge detection
+        if (getFile() < 7) {
+            if (!isSameColor(Board.Board[getFile() + 1][getRank() + direction])) {
+                validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+            }
         }
-        if (!isSameColor(Board.Board[getFile() - 1][getRank() + direction])) {
-            validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+        if (getFile() > 0) {
+            if (!isSameColor(Board.Board[getFile() - 1][getRank() + direction])) {
+                validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+            }
         }
 
         // First Pawn move option
@@ -41,13 +46,21 @@ public class Pawn extends Piece {
             validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
         }
 
-        //En passant
-        //TODO
+        // En passant
+        // TODO
+
+        // Pawns that reach the other side should be promoted
+        int otherSide = isWhite() ? 8 : 1;
+        for (int i = 0; i < 8; i++) {
+            if (validMoves.getPosition(i, otherSide) == moveType.VALID){
+                validMoves.setPosition(i, otherSide, moveType.PROMOTE);
+            }
+        }
     }
 
-    //Transform into the chosen piece when the Pawn reaches the last row
-    public void promotePawn(char pieceToBecome){
-        switch(pieceToBecome){
+    /** Transform into the chosen piece when the Pawn reaches the last row */ 
+    public void promotePawn(char pieceToBecome) {
+        switch (pieceToBecome) {
             case 'N':
                 Board.Board[getFile()][getRank()] = new Knight(getPosition(), isWhite());
                 break;
@@ -57,15 +70,9 @@ public class Pawn extends Piece {
             case 'R':
                 Board.Board[getFile()][getRank()] = new Rook(getPosition(), isWhite());
                 break;
-            case 'Q':
+            default:
                 Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
                 break;
         }
     }
-    
-    //If no piece is given to transform into, then transform into a queen
-    public void promotePawn(){
-        Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
-    }
-
 }

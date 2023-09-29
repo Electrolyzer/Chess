@@ -24,6 +24,7 @@ public abstract class Piece {
         return validMoves.getPosition(destination);
     }
 
+    /** Generates the array of which moves are valid for this piece at current boardstate */
     public abstract void updateValidMoves();
 
     /** Returns whether the two pieces being compared are of the same color */
