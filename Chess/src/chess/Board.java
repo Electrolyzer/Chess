@@ -2,7 +2,7 @@ package chess;
 
 import java.util.*;
 
-public class Board<T> {
+public class Board<T> implements Iterable<T> {
 
     public List<List<T>> Board;
 
@@ -32,5 +32,28 @@ public class Board<T> {
 
     public void setPosition(int file, int rank, T object){
         Board.get(file).set(rank, object);
+    }
+
+    public Iterator<T> iterator()
+    {
+        return new BoardIterator();
+    }
+
+    private class BoardIterator implements Iterator<T>
+    {
+        private Square _curr = new Square(0, 0);
+        private boolean _isDone = false;
+
+        public boolean hasNext() {
+            return !_isDone;
+        }
+
+        public T next() {
+            T value = getPosition(_curr);
+            _curr = _curr.getNextSquare();
+            if (_curr.equals(new Square(0, 0)))
+                _isDone = true;
+            return value;
+        }
     }
 }
