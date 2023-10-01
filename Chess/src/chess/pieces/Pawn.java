@@ -62,16 +62,16 @@ public class Pawn extends Piece {
     public void promotePawn(char pieceToBecome) {
         switch (pieceToBecome) {
             case 'N':
-                Board.setPosition(getFile(), getRank(), new Knight(getPosition(), isWhite()));
+                Board.setPosition(getFile(), getRank(), new Knight(getPosition(), isWhite()).promoteSetup());
                 break;
             case 'B':
-                Board.setPosition(getFile(), getRank(), new Bishop(getPosition(), isWhite()));
+                Board.setPosition(getFile(), getRank(), new Bishop(getPosition(), isWhite()).promoteSetup());
                 break;
             case 'R':
-                Board.setPosition(getFile(), getRank(), new Rook(getPosition(), isWhite()));
+                Board.setPosition(getFile(), getRank(), new Rook(getPosition(), isWhite()).promoteSetup());
                 break;
             default:
-                Board.setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()));
+                Board.setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()).promoteSetup());
                 break;
         }
     }

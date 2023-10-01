@@ -33,6 +33,12 @@ public abstract class Piece {
     /** Returns whether the piece has moved yet this game */
     protected boolean hasMoved(){ return _hasMoved; }
 
+    /** Sets have moved to true. Prevents weird castling bugs with pawns on the e-file promoting to rooks. */
+    public Piece promoteSetup() { 
+        _hasMoved = true; 
+        return this;
+    }
+
     /** Returns the position of the piece. */
     protected Square getPosition() { return _position; }
 

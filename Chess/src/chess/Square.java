@@ -1,7 +1,5 @@
 package chess;
 
-import java.util.*;
-
 public class Square {
     private int _file;
     private int _rank;

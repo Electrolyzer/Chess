@@ -46,23 +46,26 @@ public class King extends Piece {
         }
 
         // Handle castling.
-        for (Piece piece : Board)
+        if (!hasMoved())
         {
-            if (!(piece instanceof Rook))
-                continue;
-            if (!isSameColor(piece))
-                continue;
+            for (Piece piece : Board)
+            {
+                if (!(piece instanceof Rook))
+                    continue;
+                if (!isSameColor(piece))
+                    continue;
 
-            // TODO: Make sure king isn't in/moving through check.
-            piece.updateValidMoves(); // TODO: Is this needed?
-            if (piece.getFile() < getFile() 
-                && piece.isValidMove(new Square(getFile() - 1, getRank())) != moveType.INVALID
-                && Board.getPosition(getFile() - 1, getRank()) == null)
-                validMoves.setPosition(getFile() - 2, getRank(), moveType.CASTLE);
-            else if (piece.getFile() > getFile() 
-                && piece.isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
-                && Board.getPosition(getFile() + 1, getRank()) == null)
-                validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
+                // TODO: Make sure king isn't in/moving through check.
+                piece.updateValidMoves(); // TODO: Is this needed?
+                if (piece.getFile() < getFile() 
+                    && piece.isValidMove(new Square(getFile() - 1, getRank())) != moveType.INVALID
+                    && Board.getPosition(getFile() - 1, getRank()) == null)
+                    validMoves.setPosition(getFile() - 2, getRank(), moveType.CASTLE);
+                else if (piece.getFile() > getFile() 
+                    && piece.isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
+                    && Board.getPosition(getFile() + 1, getRank()) == null)
+                    validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
+            }
         }
 
     }
