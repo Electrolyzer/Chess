@@ -1,9 +1,17 @@
 package chess;
 
+import java.util.*;
+
 public class Board<T> {
-    public T[][] Board;
+
+    public List<List<T>> Board;
 
     public Board(){
+        Board = new ArrayList<List<T>>();
+        for (int i = 0; i < 8; i++)
+        {
+            Board.add(new ArrayList<T>());
+        }
     }
 
     public void move(Square start, Square end) {
@@ -11,18 +19,18 @@ public class Board<T> {
     }
 
     public T getPosition(Square position){
-        return Board[position.getFile()][position.getRank()];
+        return Board.get(position.getFile()).get(position.getRank());
     }
 
     public T getPosition(int file, int rank){
-        return Board[file][rank];
+        return Board.get(file).get(rank);
     }
 
     public void setPosition(Square position, T object){
-        Board[position.getFile()][position.getRank()] = object;
+        Board.get(position.getFile()).set(position.getRank(), object);
     }
 
     public void setPosition(int file, int rank, T object){
-        Board[file][rank] = object;
+        Board.get(file).set(rank, object);
     }
 }

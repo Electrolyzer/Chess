@@ -31,10 +31,10 @@ public class Bishop extends Piece{
                 //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds
                 while (0<=rank && rank<8 && 0<=file && file<8) {
 
-                    if (null == Board.Board[file][rank]) {
+                    if (null == Board.getPosition(file, rank)) {
                         validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
-                    } else if (!isSameColor(Board.Board[file][rank])) {
+                    } else if (!isSameColor(Board.getPosition(file, rank))) {
                         validMoves.setPosition(file,rank, moveType.VALID);
                         distance = 1;
                         break;

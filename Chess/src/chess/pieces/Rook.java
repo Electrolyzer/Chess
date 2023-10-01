@@ -35,10 +35,10 @@ public class Rook extends Piece{
                     file = getFile() + up * distance;
                     rank = getRank() + right * distance;
 
-                    if (null == Board.Board[file][rank]) {
+                    if (null == Board.getPosition(file, rank)) {
                         validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
-                    } else if (!isSameColor(Board.Board[file][rank])) {
+                    } else if (!isSameColor(Board.getPosition(file, rank))) {
                         validMoves.setPosition(file,rank, moveType.VALID);
                         distance = 1;
                         break;

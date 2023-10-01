@@ -24,25 +24,25 @@ public class Pawn extends Piece {
         int direction = isWhite() ? 1 : -1;
 
         // Classic Pawn movement
-        if ((Board.Board[getFile()][getRank() + direction]) == null) {
+        if ((Board.getPosition(getFile(), getRank() + direction)) == null) {
             validMoves.setPosition(getFile(), getRank() + direction, moveType.VALID);
         }
 
         // Pawn Capture movement with edge detection
         if (getFile() < 7) {
-            if (!isSameColor(Board.Board[getFile() + 1][getRank() + direction])) {
+            if (!isSameColor(Board.getPosition(getFile() + 1, getRank() + direction))) {
                 validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
             }
         }
         if (getFile() > 0) {
-            if (!isSameColor(Board.Board[getFile() - 1][getRank() + direction])) {
+            if (!isSameColor(Board.getPosition(getFile() - 1, getRank() + direction))) {
                 validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
             }
         }
 
         // First Pawn move option
-        if (!hasMoved() && (null == (Board.Board[getFile()][getRank() + direction])) &&
-                (null == (Board.Board[getFile()][getRank() + 2 * direction]))) {
+        if (!hasMoved() && (null == (Board.getPosition(getFile(), getRank() + direction))) &&
+                (null == (Board.getPosition(getFile(), getRank() + 2 * direction)))) {
             validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
         }
 
@@ -62,16 +62,16 @@ public class Pawn extends Piece {
     public void promotePawn(char pieceToBecome) {
         switch (pieceToBecome) {
             case 'N':
-                Board.Board[getFile()][getRank()] = new Knight(getPosition(), isWhite());
+                Board.setPosition(getFile(), getRank(), new Knight(getPosition(), isWhite()));
                 break;
             case 'B':
-                Board.Board[getFile()][getRank()] = new Bishop(getPosition(), isWhite());
+                Board.setPosition(getFile(), getRank(), new Bishop(getPosition(), isWhite()));
                 break;
             case 'R':
-                Board.Board[getFile()][getRank()] = new Rook(getPosition(), isWhite());
+                Board.setPosition(getFile(), getRank(), new Rook(getPosition(), isWhite()));
                 break;
             default:
-                Board.Board[getFile()][getRank()] = new Queen(getPosition(), isWhite());
+                Board.setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()));
                 break;
         }
     }

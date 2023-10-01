@@ -54,7 +54,7 @@ public class moveParser {
                 break;
             case ENPASSANT:
                 executeMove(move);
-                Piece.Board.Board[move[1].getFile()][move[0].getRank()] = null; //Delete the Pawn that was En Passanted
+                Piece.Board.setPosition(move[1].getFile(), move[0].getRank(), null); //Delete the Pawn that was En Passanted
                 break;
             case PROMOTE:
                 executeMove(move);
@@ -81,7 +81,7 @@ public class moveParser {
     }
 
     public static void promotePawn(Square pawnPos, char pieceToBecome){
-        Pawn pawn = Piece.Board.getPosition(pawnPos);  
+        Pawn pawn = (Pawn)Piece.Board.getPosition(pawnPos);  
         pawn.promotePawn(pieceToBecome);
         /*TODO: Need to fix the Dynamic/Static typing issue. Maybe move promotion function into this class?*/
     }
