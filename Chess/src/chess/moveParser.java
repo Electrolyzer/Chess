@@ -76,11 +76,11 @@ public class moveParser {
     }
 
     public static void resign(){
-        //TODO
+        //TODO . Resign method
     }
 
     public static void draw(){
-        //TODO
+        //TODO . Draw method
     }
 
     public static void promotePawn(Square pawnPos, char pieceToBecome){

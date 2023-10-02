@@ -3,7 +3,7 @@ package chess;
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
-    public static Board<Piece> Board = new Board<Piece>();
+    public static Board<Piece> Board; // = new Board<Piece>();
 
     private Square _position;
     private boolean _isWhite;

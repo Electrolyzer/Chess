@@ -2,6 +2,8 @@ package chess;
 
 import java.util.ArrayList;
 
+import chess.pieces.*;
+
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
 		            BP, BR, BN, BB, BK, BQ};
@@ -62,5 +64,31 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
+		Piece.Board = new Board<Piece>();
+		Square curPos;
+		for(int i=0;i<8;i++){
+			curPos = new Square(i, 0)
+			if(i==0 || i==7) Piece.Board.setPosition(curPos, new Rook(curPos, true));
+			if(i==1 || i==6) Piece.Board.setPosition(curPos, new Knight(curPos, true));
+			if(i==2 || i==5) Piece.Board.setPosition(curPos, new Bishop(curPos, true));
+			if(i==4) Piece.Board.setPosition(curPos, new King(curPos, true));
+			if(i==5) Piece.Board.setPosition(curPos, new Queen(curPos, true));
+		}
+		for(int i=0;i<8;i++){
+			curPos = new Square(i, 1);
+			Piece.Board.setPosition(curPos, new Pawn(curPos, true));
+		}
+		for(int i=0;i<8;i++){
+			curPos = new Square(i, 6);
+			Piece.Board.setPosition(curPos, new Pawn(curPos, false));
+		}
+		for(int i=0;i<8;i++){
+			curPos = new Square(i, 7);
+			if(i==0 || i==7) Piece.Board.setPosition(curPos, new Rook(curPos, false));
+			if(i==1 || i==6) Piece.Board.setPosition(curPos, new Knight(curPos, false));
+			if(i==2 || i==5) Piece.Board.setPosition(curPos, new Bishop(curPos, false));
+			if(i==4) Piece.Board.setPosition(curPos, new King(curPos, false));
+			if(i==5) Piece.Board.setPosition(curPos, new Queen(curPos, false));
+		}
 	}
 }
