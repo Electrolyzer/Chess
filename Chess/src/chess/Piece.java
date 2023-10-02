@@ -31,7 +31,7 @@ public abstract class Piece {
     protected boolean isSameColor(Piece other){ return isWhite() ^ other.isWhite(); }
 
     /** Returns whether the piece has moved yet this game */
-    protected boolean hasMoved(){ return _hasMoved; }
+    public boolean hasMoved(){ return _hasMoved; }
 
     /** Sets have moved to true. Prevents weird castling bugs with pawns on the e-file promoting to rooks. */
     public Piece promoteSetup() { 

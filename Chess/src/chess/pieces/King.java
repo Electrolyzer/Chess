@@ -50,20 +50,25 @@ public class King extends Piece {
         {
             for (Piece piece : Board)
             {
-                if (!(piece instanceof Rook))
+                //Make sure the other piece is a rook of the same color that hasn't moved
+                if (!(piece instanceof Rook)) 
                     continue;
                 if (!isSameColor(piece))
                     continue;
+                if(piece.hasMoved())
+                    continue;
 
-                // TODO: Make sure king isn't in/moving through check.
-                piece.updateValidMoves(); // TODO: Is this needed?
+                //Check which direction the castling is happening in
                 if (piece.getFile() < getFile() 
-                    && piece.isValidMove(new Square(getFile() - 1, getRank())) != moveType.INVALID
-                    && Board.getPosition(getFile() - 1, getRank()) == null)
+                    && isValidMove(new Square(getFile() - 1, getRank())) != moveType.INVALID  //Make sure the king is not in check in the next square
+                    && Board.getPosition(getFile() - 1, getRank()) == null  //Make sure the next three squares are empty for LH castle
+                    && Board.getPosition(getFile() - 2, getRank()) == null
+                    && Board.getPosition(getFile() - 3, getRank()) == null)
                     validMoves.setPosition(getFile() - 2, getRank(), moveType.CASTLE);
                 else if (piece.getFile() > getFile() 
-                    && piece.isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
-                    && Board.getPosition(getFile() + 1, getRank()) == null)
+                    && isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
+                    && Board.getPosition(getFile() + 1, getRank()) == null  //Make sure the next two squares are empty for RH castle
+                    && Board.getPosition(getFile() - 2, getRank()) == null)
                     validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
             }
         }

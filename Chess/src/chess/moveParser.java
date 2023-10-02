@@ -1,6 +1,4 @@
 package chess;
-import chess.Piece;
-import chess.Square;
 import chess.Piece.moveType;
 import chess.pieces.*;
 
@@ -50,7 +48,13 @@ public class moveParser {
                 break;
             case CASTLE: 
                 executeMove(move);
-                executeMove(move); //TODO Additionally execute rook move 
+                if(move[1].getFile() > move[0].getFile()){
+                    Square[] rookMove = {new Square(8, move[1].getRank()), new Square(6, move[1].getRank())};
+                    executeMove(rookMove);
+                }else{
+                    Square[] rookMove = {new Square(1, move[1].getRank()), new Square(4, move[1].getRank())};
+                    executeMove(rookMove);
+                }
                 break;
             case ENPASSANT:
                 executeMove(move);
@@ -69,7 +73,6 @@ public class moveParser {
         Piece pieceToMove = Piece.Board.getPosition(move[0]);
         Piece.Board.setPosition(move[1], pieceToMove);
         Piece.Board.setPosition(move[0], null);
-        //pieceToMove.extraMove.getPosition(move[1])
     }
 
     public static void resign(){
@@ -83,7 +86,6 @@ public class moveParser {
     public static void promotePawn(Square pawnPos, char pieceToBecome){
         Pawn pawn = (Pawn)Piece.Board.getPosition(pawnPos);  
         pawn.promotePawn(pieceToBecome);
-        /*TODO: Need to fix the Dynamic/Static typing issue. Maybe move promotion function into this class?*/
     }
 
     public static moveType checkMoveValidity(Square[] move){
