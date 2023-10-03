@@ -8,6 +8,8 @@ public class Knight extends Piece {
         super(position, isWhite);
     }
 
+    public String getType(){ return "N"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid

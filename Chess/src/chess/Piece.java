@@ -47,4 +47,6 @@ public abstract class Piece {
 
     public int getRank() { return _position.getRank(); }
     public int getFile() { return _position.getFile(); }
+
+    public abstract String getType();
 }

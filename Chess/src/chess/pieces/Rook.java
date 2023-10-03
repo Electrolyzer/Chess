@@ -8,6 +8,8 @@ public class Rook extends Piece{
         super(position, isWhite);
     }
 
+    public String getType(){ return "R"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid

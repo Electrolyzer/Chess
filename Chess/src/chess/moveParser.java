@@ -7,7 +7,7 @@ public class moveParser {
     private moveParser(){
     }
 
-    public static void parseMove(String moveToParse){
+    public static void parseMove(String moveToParse, boolean curPlayer){
         
         int nextSpace;
         char pieceToBecome = '\0';
@@ -39,7 +39,9 @@ public class moveParser {
             }
         }
 
-        switch(checkMoveValidity(move)){
+
+
+        switch(checkMoveValidity(move, curPlayer)){
             case INVALID:
                 //Create message for invalid move
                 break;
@@ -88,7 +90,9 @@ public class moveParser {
         pawn.promotePawn(pieceToBecome);
     }
 
-    public static moveType checkMoveValidity(Square[] move){
+    public static moveType checkMoveValidity(Square[] move, boolean curPlayer){
+        if(Piece.Board.getPosition(move[0]) == null) return moveType.INVALID;
+        if(Piece.Board.getPosition(move[0]).isWhite() == curPlayer) return moveType.INVALID;
         return Piece.Board.getPosition(move[0]).isValidMove(move[1]);
     }
 }

@@ -2,6 +2,9 @@ package chess;
 
 import java.util.ArrayList;
 
+import chess.ReturnPiece.PieceFile;
+import chess.ReturnPiece.PieceType;
+import chess.ReturnPlay.Message;
 import chess.pieces.*;
 
 class ReturnPiece {
@@ -39,6 +42,9 @@ class ReturnPlay {
 public class Chess {
 	
 	enum Player { white, black }
+
+	private static Board<Piece> board;
+	private static boolean playerIsWhite = true;
 	
 	/**
 	 * Plays the next move for whichever player has the turn.
@@ -52,12 +58,101 @@ public class Chess {
 	public static ReturnPlay play(String move) {
 
 		/* FILL IN THIS METHOD */
-		
-		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
+		moveParser.parseMove(move, playerIsWhite);
+		ArrayList<ReturnPiece> returnPieces = new ArrayList<ReturnPiece>();
+		ReturnPiece pieceToAdd;
+
+		for(Piece piece : board){
+			pieceToAdd = pieceToReturnPiece(piece);
+			returnPieces.add(pieceToAdd);
+		}
+
+		Message message = null;
+		if(message == null || message == Message.CHECK){
+			playerIsWhite = !playerIsWhite;
+		}
+
+		ReturnPlay returnPlay = new ReturnPlay();
+		returnPlay.message = message;
+		returnPlay.piecesOnBoard = returnPieces;
+		return returnPlay;
 	}
 	
+	private static ReturnPiece pieceToReturnPiece(Piece pieceToConvert){
+		ReturnPiece returnPiece = new ReturnPiece();
+		returnPiece.pieceRank = pieceToConvert.getRank() + 1;
+
+		switch(pieceToConvert.getFile()){
+			case 0:
+				returnPiece.pieceFile = PieceFile.a;
+				break;
+			case 1:
+				returnPiece.pieceFile = PieceFile.b;
+				break;
+			case 2:
+				returnPiece.pieceFile = PieceFile.c;
+				break;
+			case 3:
+				returnPiece.pieceFile = PieceFile.d;
+				break;
+			case 4:
+				returnPiece.pieceFile = PieceFile.e;
+				break;
+			case 5:
+				returnPiece.pieceFile = PieceFile.f;
+				break;
+			case 6:
+				returnPiece.pieceFile = PieceFile.g;
+				break;
+			case 7:
+				returnPiece.pieceFile = PieceFile.h;
+				break;
+		}
+
+		String pieceType = (pieceToConvert.isWhite() ? "W" : "B") + pieceToConvert.getType();
+
+		switch(pieceType){
+			case "WP":
+				returnPiece.pieceType = PieceType.WP;
+				break;
+			case "WR":
+				returnPiece.pieceType = PieceType.WR;
+				break;
+			case "WN":
+				returnPiece.pieceType = PieceType.WN;
+				break;
+			case "WB":
+				returnPiece.pieceType = PieceType.WB;
+				break;
+			case "WQ":
+				returnPiece.pieceType = PieceType.WQ;
+				break;
+			case "WK":
+				returnPiece.pieceType = PieceType.WK;
+				break;
+			case "BP":
+				returnPiece.pieceType = PieceType.BP;
+				break;
+			case "BR":
+				returnPiece.pieceType = PieceType.BR;
+				break;
+			case "BN":
+				returnPiece.pieceType = PieceType.BN;
+				break;
+			case "BB":
+				returnPiece.pieceType = PieceType.BB;
+				break;
+			case "BQ":
+				returnPiece.pieceType = PieceType.BQ;
+				break;
+			case "BK":
+				returnPiece.pieceType = PieceType.BK;
+				break;
+		}
+	
+
+		return returnPiece;
+	}
 	
 	/**
 	 * This method should reset the game, and start from scratch.
@@ -65,6 +160,7 @@ public class Chess {
 	public static void start() {
 		/* FILL IN THIS METHOD */
 		Piece.Board = new Board<Piece>();
+		board = Piece.Board;
 		Square curPos;
 		for(int i=0;i<8;i++){
 			curPos = new Square(i, 0);

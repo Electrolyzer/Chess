@@ -8,6 +8,8 @@ public class Bishop extends Piece{
         super(position, isWhite);
     }
 
+    public String getType(){ return "B"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid

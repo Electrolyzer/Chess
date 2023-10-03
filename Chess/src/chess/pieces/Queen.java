@@ -8,6 +8,8 @@ public class Queen extends Piece {
         super(position, isWhite);
     }
 
+    public String getType(){ return "Q"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid

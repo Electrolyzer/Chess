@@ -12,6 +12,8 @@ public class Pawn extends Piece {
         super(position, isWhite);
     }
 
+    public String getType(){ return "P"; }
+
     public void updateValidMoves() {
 
         // Initialize all moves to invalid
