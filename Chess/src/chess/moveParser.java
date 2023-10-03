@@ -32,7 +32,7 @@ public class moveParser {
                 }else if( "BNRQ".indexOf(moveToParse.charAt(0)) != -1){ 
                     pieceToBecome = moveToParse.charAt(0);
                 }else{
-                    move[counter] = new Square((int)moveToParse.charAt(0), moveToParse.charAt(1));
+                    move[counter] = new Square((int)(moveToParse.charAt(0) - 'a'), (int)(moveToParse.charAt(1) - '0'));
                 }
                 
                 counter++;
