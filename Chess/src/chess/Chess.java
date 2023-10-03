@@ -67,7 +67,7 @@ public class Chess {
 		Piece.Board = new Board<Piece>();
 		Square curPos;
 		for(int i=0;i<8;i++){
-			curPos = new Square(i, 0)
+			curPos = new Square(i, 0);
 			if(i==0 || i==7) Piece.Board.setPosition(curPos, new Rook(curPos, true));
 			if(i==1 || i==6) Piece.Board.setPosition(curPos, new Knight(curPos, true));
 			if(i==2 || i==5) Piece.Board.setPosition(curPos, new Bishop(curPos, true));
