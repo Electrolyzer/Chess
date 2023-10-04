@@ -3,7 +3,7 @@ package chess;
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
-    public static Board<Piece> Board = new Board<Piece>();
+    public static Board<Piece> Board; // = new Board<Piece>();
 
     private Square _position;
     private boolean _isWhite;
@@ -16,6 +16,7 @@ public abstract class Piece {
     public Piece(Square position, boolean isWhite) {
         _position = position;
         _isWhite = isWhite;
+        validMoves = new Board<moveType>();
     }
 
     /** Returns whether or not moving the piece to the given destination would be valid. 
@@ -24,14 +25,18 @@ public abstract class Piece {
         return validMoves.getPosition(destination);
     }
 
+    public void move(Square destination){
+        _position = destination;
+    }
+
     /** Generates the array of which moves are valid for this piece at current boardstate */
     public abstract void updateValidMoves();
 
     /** Returns whether the two pieces being compared are of the same color */
-    protected boolean isSameColor(Piece other){ return isWhite() ^ other.isWhite(); }
+    protected boolean isSameColor(Piece other){ return !(isWhite() ^ other.isWhite()); }
 
     /** Returns whether the piece has moved yet this game */
-    protected boolean hasMoved(){ return _hasMoved; }
+    public boolean hasMoved(){ return _hasMoved; }
 
     /** Sets have moved to true. Prevents weird castling bugs with pawns on the e-file promoting to rooks. */
     public Piece promoteSetup() { 
@@ -47,4 +52,6 @@ public abstract class Piece {
 
     public int getRank() { return _position.getRank(); }
     public int getFile() { return _position.getFile(); }
+
+    public abstract String getType();
 }

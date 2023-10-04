@@ -8,6 +8,8 @@ public class Rook extends Piece{
         super(position, isWhite);
     }
 
+    public String getType(){ return "R"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
@@ -27,13 +29,12 @@ public class Rook extends Piece{
 
                 //Only check for valid moves if exactly one of right or up is zero so the rook only moves straight
                 if(!((right==0) ^ (up==0))){ continue; }
-
+                
+                file = getFile() + right * distance;
+                rank = getRank() + up * distance;
                 //Checks each direction until it hits a piece, then checks whether that piece is capturable but stops
                 //after hitting a piece whether or not it is. 
                 while (0<=rank && rank<8 && 0<=file && file<8) {
-
-                    file = getFile() + up * distance;
-                    rank = getRank() + right * distance;
 
                     if (null == Board.getPosition(file, rank)) {
                         validMoves.setPosition(file, rank, moveType.VALID);
@@ -46,8 +47,8 @@ public class Rook extends Piece{
                         distance = 1;
                         break;
                     }
-                    file = getFile() + up * distance;
-                    rank = getRank() + right * distance;
+                    file = getFile() + right * distance;
+                    rank = getRank() + up * distance;
                 }
 
             }

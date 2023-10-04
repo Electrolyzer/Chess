@@ -12,6 +12,8 @@ public class Pawn extends Piece {
         super(position, isWhite);
     }
 
+    public String getType(){ return "P"; }
+
     public void updateValidMoves() {
 
         // Initialize all moves to invalid
@@ -30,13 +32,17 @@ public class Pawn extends Piece {
 
         // Pawn Capture movement with edge detection
         if (getFile() < 7) {
-            if (!isSameColor(Board.getPosition(getFile() + 1, getRank() + direction))) {
-                validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+            if(Board.getPosition(getFile() + 1, getRank() + direction) != null){
+                if (!isSameColor(Board.getPosition(getFile() + 1, getRank() + direction))) {
+                    validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+                }
             }
         }
         if (getFile() > 0) {
-            if (!isSameColor(Board.getPosition(getFile() - 1, getRank() + direction))) {
-                validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+            if(Board.getPosition(getFile() - 1, getRank() + direction) != null){
+                if (!isSameColor(Board.getPosition(getFile() - 1, getRank() + direction))) {
+                    validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+                }
             }
         }
 
@@ -50,7 +56,7 @@ public class Pawn extends Piece {
         // TODO
 
         // Pawns that reach the other side should be promoted
-        int otherSide = isWhite() ? 8 : 1;
+        int otherSide = isWhite() ? 7 : 0;
         for (int i = 0; i < 8; i++) {
             if (validMoves.getPosition(i, otherSide) == moveType.VALID){
                 validMoves.setPosition(i, otherSide, moveType.PROMOTE);

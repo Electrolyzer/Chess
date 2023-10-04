@@ -8,6 +8,8 @@ public class Knight extends Piece {
         super(position, isWhite);
     }
 
+    public String getType(){ return "N"; }
+
     public void updateValidMoves(){
 
         //Initialize all moves to invalid
@@ -25,7 +27,7 @@ public class Knight extends Piece {
             for (int right = -2; right <= 2; right ++) {
 
                 //Only check for valid moves if the taxicab distance is 3
-                if(!(Math.abs(right)+Math.abs(up)==3)){ continue; }
+                if((Math.abs(right)+Math.abs(up)!=3)){ continue; }
 
                 //Ensures knight does not move out of bounds
                 file = getFile() + up;

@@ -10,7 +10,12 @@ public class Board<T> implements Iterable<T> {
         Board = new ArrayList<List<T>>();
         for (int i = 0; i < 8; i++)
         {
-            Board.add(new ArrayList<T>());
+            List<T> list = new ArrayList<T>();
+            for (int j = 0; j < 8; j++)
+            {
+                list.add(null);
+            }
+            Board.add(list);
         }
     }
 
