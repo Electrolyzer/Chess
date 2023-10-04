@@ -18,19 +18,20 @@ public class Queen extends Piece {
                 validMoves.setPosition(i, j, moveType.INVALID);
             }    
         }
-        int distance = 1;
-        int rank = 0;
-        int file = 0;
+        int distance;
+        int rank;
+        int file;
 
         //The two for loops iterate the 8 possible directions
         for (int up = -1; up <= 1; up ++) {
             for (int right = -1; right <= 1; right ++) {
 
                 //Don't check for valid moves when there is no direction
-                if(!((right==0) && (up==0))){ continue; }
-
-                file = getFile() + up * distance;
-                rank = getRank() + right * distance;
+                if( (right==0) && (up==0) ){ continue; }
+                
+                distance = 1;
+                file = getFile() + right * distance;
+                rank = getRank() + up * distance;
 
                 //Checks each direction until it hits a piece, then checks whether that piece is capturable but stops
                 //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds
@@ -40,20 +41,16 @@ public class Queen extends Piece {
                         validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
                     } else if (!isSameColor(Board.getPosition(file, rank))) {
-                        validMoves.setPosition(file,rank, moveType.VALID);
-                        distance = 1;
+                        validMoves.setPosition(file, rank, moveType.VALID);
                         break;
                     } else {
-                        distance = 1;
                         break;
                     }
-                    file = getFile() + up * distance;
-                    rank = getRank() + right * distance;
-                }
+                    file = getFile() + right * distance;
+                    rank = getRank() + up * distance;
 
+                }
             }
         }
-
     }
-    
 }

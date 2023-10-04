@@ -88,7 +88,7 @@ public class moveParser {
 
     public static moveType checkMoveValidity(Square[] move, boolean curPlayer){
         if(Piece.Board.getPosition(move[0]) == null) return moveType.INVALID;
-        if(Piece.Board.getPosition(move[0]).isWhite() == curPlayer) return moveType.INVALID;
+        if(Piece.Board.getPosition(move[0]).isWhite() != curPlayer) return moveType.INVALID;
         return Piece.Board.getPosition(move[0]).isValidMove(move[1]);
     }
 

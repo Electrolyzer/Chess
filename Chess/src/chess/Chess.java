@@ -162,6 +162,8 @@ public class Chess {
 		Piece.Board = new Board<Piece>();
 		board = Piece.Board;
 		Square curPos;
+		playerIsWhite = true;
+
 		for(int i=0;i<8;i++){
 			curPos = new Square(i, 0);
 			if(i==0 || i==7) Piece.Board.setPosition(curPos, new Rook(curPos, true));

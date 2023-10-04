@@ -27,7 +27,7 @@ public class King extends Piece {
             for (int right = -1; right <= 1; right++) {
 
                 // Don't check for valid move when there is no direction
-                if (!((right == 0) && (up == 0))) {
+                if (((right == 0) && (up == 0))) {
                     continue;
                 }
 

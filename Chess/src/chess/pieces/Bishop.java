@@ -26,8 +26,8 @@ public class Bishop extends Piece{
         for (int up = -1; up <= 1; up += 2) {
             for (int right = -1; right <= 1; right += 2) {
 
-                file = getFile() + up * distance;
-                rank = getRank() + right * distance;
+                file = getFile() + right * distance;
+                rank = getRank() + up * distance;
 
                 //Checks each direction until it hits a piece, then checks whether that piece is capturable but stops
                 //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds
@@ -44,8 +44,8 @@ public class Bishop extends Piece{
                         distance = 1;
                         break;
                     }
-                    file = getFile() + up * distance;
-                    rank = getRank() + right * distance;
+                    file = getFile() + right * distance;
+                    rank = getRank() + up * distance;
                 }
 
             }
