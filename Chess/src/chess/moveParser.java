@@ -1,13 +1,14 @@
 package chess;
 import chess.Piece.moveType;
 import chess.pieces.*;
+import chess.ReturnPlay.Message;;
 
 public class moveParser {
     
     private moveParser(){
     }
 
-    public static void parseMove(String moveToParse, boolean curPlayer){
+    public static Message parseMove(String moveToParse, boolean curPlayer){
         
         int nextSpace;
         char pieceToBecome = '\0';
@@ -25,28 +26,29 @@ public class moveParser {
             //Otherwise parse the characters. First check for resign, draw or promotion, then try to parse a position
             else{
                 if(moveToParse.indexOf("resign") != -1){
-                    resign();
+                    return curPlayer ? Message.RESIGN_BLACK_WINS : Message.RESIGN_WHITE_WINS;
                 }else if(moveToParse.indexOf("draw?") == 0){
                     executeMove(move);
-                    draw();
+                    return Message.DRAW;
                 }else if( "BNRQ".indexOf(moveToParse.charAt(0)) != -1){ 
                     pieceToBecome = moveToParse.charAt(0);
+                    moveToParse = moveToParse.substring(1);
                 }else{
-                    move[counter] = new Square((int)(moveToParse.charAt(0) - 'a'), (int)(moveToParse.charAt(1) - '0'));
+                    move[counter] = new Square((int)(moveToParse.charAt(0) - 'a'), (int)(moveToParse.charAt(1) - '1'));
+                    moveToParse = moveToParse.substring(2);
                 }
-                
                 counter++;
             }
         }
 
 
-
         switch(checkMoveValidity(move, curPlayer)){
             case INVALID:
                 //Create message for invalid move
-                break;
+                return Message.ILLEGAL_MOVE;
             case VALID:
                 executeMove(move); //Execute move normally
+                System.out.println("valid");
                 break;
             case CASTLE: 
                 executeMove(move);
@@ -67,22 +69,16 @@ public class moveParser {
                 promotePawn(move[1], pieceToBecome); //Change pawn after movement
                 break;
         }        
-
+        return null;
     }
 
 
     public static void executeMove(Square[] move){
         Piece pieceToMove = Piece.Board.getPosition(move[0]);
+        pieceToMove.move(move[1]);
         Piece.Board.setPosition(move[1], pieceToMove);
         Piece.Board.setPosition(move[0], null);
-    }
-
-    public static void resign(){
-        //TODO . Resign method
-    }
-
-    public static void draw(){
-        //TODO . Draw method
+        updateLoop();
     }
 
     public static void promotePawn(Square pawnPos, char pieceToBecome){
@@ -94,5 +90,12 @@ public class moveParser {
         if(Piece.Board.getPosition(move[0]) == null) return moveType.INVALID;
         if(Piece.Board.getPosition(move[0]).isWhite() == curPlayer) return moveType.INVALID;
         return Piece.Board.getPosition(move[0]).isValidMove(move[1]);
+    }
+
+    public static void updateLoop(){
+        for(Piece piece : Piece.Board){
+			if(piece == null) { continue; }
+			piece.updateValidMoves();;
+		}
     }
 }

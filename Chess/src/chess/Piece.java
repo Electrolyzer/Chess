@@ -16,6 +16,7 @@ public abstract class Piece {
     public Piece(Square position, boolean isWhite) {
         _position = position;
         _isWhite = isWhite;
+        validMoves = new Board<moveType>();
     }
 
     /** Returns whether or not moving the piece to the given destination would be valid. 
@@ -24,11 +25,15 @@ public abstract class Piece {
         return validMoves.getPosition(destination);
     }
 
+    public void move(Square destination){
+        _position = destination;
+    }
+
     /** Generates the array of which moves are valid for this piece at current boardstate */
     public abstract void updateValidMoves();
 
     /** Returns whether the two pieces being compared are of the same color */
-    protected boolean isSameColor(Piece other){ return isWhite() ^ other.isWhite(); }
+    protected boolean isSameColor(Piece other){ return !(isWhite() ^ other.isWhite()); }
 
     /** Returns whether the piece has moved yet this game */
     public boolean hasMoved(){ return _hasMoved; }
