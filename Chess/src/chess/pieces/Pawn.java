@@ -54,9 +54,6 @@ public class Pawn extends Piece {
             validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
         }
 
-        // En passant
-        // TODO
-
         // Pawns that reach the other side should be promoted
         int otherSide = isWhite() ? 7 : 0;
         for (int i = 0; i < 8; i++) {
