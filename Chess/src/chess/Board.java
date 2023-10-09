@@ -19,6 +19,22 @@ public class Board<T> implements Iterable<T> {
         }
     }
 
+    /** Creates copy of a given board. Mainly for use in checking move results without 
+     * affecting the main board.
+     */
+    public Board(Board<T> boardToCopy){
+        Board = new ArrayList<List<T>>();
+        for (int i = 0; i < 8; i++)
+        {
+            List<T> list = new ArrayList<T>();
+            for (int j = 0; j < 8; j++)
+            {
+                list.add(boardToCopy.getPosition(i, j));
+            }
+            Board.add(list);
+        }
+    }
+
     public void move(Square start, Square end) {
         return;
     }

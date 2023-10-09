@@ -16,7 +16,7 @@ public class moveParser {
 
         int counter = 0;
 
-        while(moveToParse != ""){
+        while(!moveToParse.equals("")){
 
             //Find where the next space is in the string
             nextSpace = moveToParse.indexOf(" ");

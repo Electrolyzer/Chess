@@ -34,14 +34,16 @@ public class Pawn extends Piece {
         if (getFile() < 7) {
             if(Board.getPosition(getFile() + 1, getRank() + direction) != null){
                 if (!isSameColor(Board.getPosition(getFile() + 1, getRank() + direction))) {
-                    validMoves.setPosition(getFile() + 1, getRank() + direction, moveType.VALID);
+                    moveType type = Board.getPosition(getFile() + 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
+                    validMoves.setPosition(getFile() + 1, getRank() + direction, type);
                 }
             }
         }
         if (getFile() > 0) {
             if(Board.getPosition(getFile() - 1, getRank() + direction) != null){
                 if (!isSameColor(Board.getPosition(getFile() - 1, getRank() + direction))) {
-                    validMoves.setPosition(getFile() - 1, getRank() + direction, moveType.VALID);
+                    moveType type = Board.getPosition(getFile() - 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
+                    validMoves.setPosition(getFile() - 1, getRank() + direction, type);
                 }
             }
         }
@@ -51,9 +53,6 @@ public class Pawn extends Piece {
                 (null == (Board.getPosition(getFile(), getRank() + 2 * direction)))) {
             validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
         }
-
-        // En passant
-        // TODO
 
         // Pawns that reach the other side should be promoted
         int otherSide = isWhite() ? 7 : 0;
@@ -79,6 +78,17 @@ public class Pawn extends Piece {
             default:
                 Board.setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()).promoteSetup());
                 break;
+        }
+    }
+
+    public void move(Square destination)
+    {
+        boolean movingTwo = Math.abs(getPosition().getRank() - destination.getRank()) == 2;
+        super.move(destination);
+        if (movingTwo)
+        {
+            PhantomPawn phantom = new PhantomPawn(this);
+            Board.setPosition(getFile(), getRank() + (isWhite() ? -1 : 1), phantom);
         }
     }
 }
