@@ -1,5 +1,7 @@
 package chess;
 
+import chess.pieces.PhantomPawn;
+
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
@@ -27,6 +29,11 @@ public abstract class Piece {
 
     public void move(Square destination){
         _position = destination;
+        for (Piece piece : Board) {
+            if (piece instanceof PhantomPawn) {
+                Board.setPosition(getFile(), getRank(), null);
+            }
+        }
     }
 
     /** Generates the array of which moves are valid for this piece at current boardstate */

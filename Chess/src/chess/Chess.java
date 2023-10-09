@@ -65,7 +65,8 @@ public class Chess {
 		for(Piece piece : board){
 			if(piece == null) { continue; }
 			pieceToAdd = pieceToReturnPiece(piece);
-			returnPieces.add(pieceToAdd);
+			if (pieceToAdd != null)
+				returnPieces.add(pieceToAdd);
 		}
 
 		if(message == null || message == Message.CHECK){
@@ -148,6 +149,8 @@ public class Chess {
 			case "BK":
 				returnPiece.pieceType = PieceType.BK;
 				break;
+			default:
+				return null;
 		}
 	
 
