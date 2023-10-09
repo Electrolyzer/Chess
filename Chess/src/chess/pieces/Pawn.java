@@ -88,7 +88,7 @@ public class Pawn extends Piece {
         if (movingTwo)
         {
             PhantomPawn phantom = new PhantomPawn(this);
-            Board.setPosition(getFile(), getRank(), phantom);
+            Board.setPosition(getFile(), getRank() + (isWhite() ? -1 : 1), phantom);
         }
     }
 }

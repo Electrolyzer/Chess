@@ -31,7 +31,7 @@ public abstract class Piece {
         _position = destination;
         for (Piece piece : Board) {
             if (piece instanceof PhantomPawn) {
-                Board.setPosition(getFile(), getRank(), null);
+                Board.setPosition(piece.getFile(), piece.getRank(), null);
             }
         }
     }
