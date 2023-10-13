@@ -28,6 +28,7 @@ public abstract class Piece {
     }
 
     public void move(Square destination){
+        _hasMoved = true;
         _position = destination;
         for (Piece piece : Board) {
             if (piece instanceof PhantomPawn) {
