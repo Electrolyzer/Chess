@@ -37,7 +37,8 @@ public class King extends Piece {
                 if(file<0 || file>7 || rank<0 || rank>7){ continue; }
 
                 // Checks each direction for valid movement
-                if (null == Board.getPosition(getFile() + up, getRank() + right)) {
+                Piece piece = Board.getPosition(getFile() + up, getRank() + right);
+                if (null == piece || piece instanceof PhantomPawn) {
                     validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
                     continue;
                 } else if (!isSameColor(Board.getPosition(getFile() + up, getRank() + right))) {
