@@ -5,7 +5,8 @@ import chess.pieces.PhantomPawn;
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
-    public static Board<Piece> Board; // = new Board<Piece>();
+    private Board<Piece> _board; 
+    public static final Board<Piece> DefaultBoard = new Board<Piece>();
 
     private Square _position;
     private boolean _isWhite;
@@ -18,21 +19,28 @@ public abstract class Piece {
     public Piece(Square position, boolean isWhite) {
         _position = position;
         _isWhite = isWhite;
+        _board = DefaultBoard;
         validMoves = new Board<moveType>();
     }
+
+    /** Creates a copy of the piece with the same properties but on a different Board */
+    public abstract Piece copyToBoard(Board<Piece> board);
 
     /** Returns whether or not moving the piece to the given destination would be valid. 
     */
     public moveType isValidMove(Square destination){
+        
         return validMoves.getPosition(destination);
     }
 
     public void move(Square destination){
+        _board.setPosition(destination, this);
+        _board.setPosition(_position, null);
         _hasMoved = true;
         _position = destination;
-        for (Piece piece : Board) {
+        for (Piece piece : _board) {
             if (piece instanceof PhantomPawn) {
-                Board.setPosition(piece.getFile(), piece.getRank(), null);
+                _board.setPosition(piece.getFile(), piece.getRank(), null);
             }
         }
     }
@@ -55,6 +63,12 @@ public abstract class Piece {
     /** Returns the position of the piece. */
     protected Square getPosition() { return _position; }
 
+    /** Returns the board the piece is on. */
+    public Board<Piece> getBoard() { return _board; }
+
+    /** Sets the board the piece is using. Returns the piece. */
+    protected Piece setBoard(Board<Piece> board) { _board = board; return this; }
+
     /** Returns whether or not the piece is white. */
     public boolean isWhite() { return _isWhite; }
 
@@ -62,4 +76,22 @@ public abstract class Piece {
     public int getFile() { return _position.getFile(); }
 
     public abstract String getType();
+
+    private boolean isInCheckAfterMove(Square destination) {
+        Board<Piece> copy = Board.deepCopy(_board);
+        Piece copiedPiece = copy.getPosition(getPosition());
+        copiedPiece.move(destination);
+        return Board.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
+    }
+
+    protected void updateValidMovesCheck() {
+        Square s = new Square(0, 0);
+        while (true) {
+            if (validMoves.getPosition(s) != moveType.INVALID && isInCheckAfterMove(s))
+                validMoves.setPosition(s, moveType.INVALID);
+            s = s.getNextSquare();
+            if (s.equals(new Square(0, 0)))
+                break;
+        }
+    }
 }

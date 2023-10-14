@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -26,31 +27,31 @@ public class Pawn extends Piece {
         int direction = isWhite() ? 1 : -1;
 
         // Classic Pawn movement
-        if ((Board.getPosition(getFile(), getRank() + direction)) == null) {
+        if ((getBoard().getPosition(getFile(), getRank() + direction)) == null) {
             validMoves.setPosition(getFile(), getRank() + direction, moveType.VALID);
         }
 
         // Pawn Capture movement with edge detection
         if (getFile() < 7) {
-            if(Board.getPosition(getFile() + 1, getRank() + direction) != null){
-                if (!isSameColor(Board.getPosition(getFile() + 1, getRank() + direction))) {
-                    moveType type = Board.getPosition(getFile() + 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
+            if(getBoard().getPosition(getFile() + 1, getRank() + direction) != null){
+                if (!isSameColor(getBoard().getPosition(getFile() + 1, getRank() + direction))) {
+                    moveType type = getBoard().getPosition(getFile() + 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
                     validMoves.setPosition(getFile() + 1, getRank() + direction, type);
                 }
             }
         }
         if (getFile() > 0) {
-            if(Board.getPosition(getFile() - 1, getRank() + direction) != null){
-                if (!isSameColor(Board.getPosition(getFile() - 1, getRank() + direction))) {
-                    moveType type = Board.getPosition(getFile() - 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
+            if(getBoard().getPosition(getFile() - 1, getRank() + direction) != null){
+                if (!isSameColor(getBoard().getPosition(getFile() - 1, getRank() + direction))) {
+                    moveType type = getBoard().getPosition(getFile() - 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
                     validMoves.setPosition(getFile() - 1, getRank() + direction, type);
                 }
             }
         }
 
         // First Pawn move option
-        if (!hasMoved() && (null == (Board.getPosition(getFile(), getRank() + direction))) &&
-                (null == (Board.getPosition(getFile(), getRank() + 2 * direction)))) {
+        if (!hasMoved() && (null == (getBoard().getPosition(getFile(), getRank() + direction))) &&
+                (null == (getBoard().getPosition(getFile(), getRank() + 2 * direction)))) {
             validMoves.setPosition(getFile(), getRank() + 2 * direction, moveType.VALID);
         }
 
@@ -61,22 +62,23 @@ public class Pawn extends Piece {
                 validMoves.setPosition(i, otherSide, moveType.PROMOTE);
             }
         }
+        updateValidMovesCheck();
     }
 
     /** Transform into the chosen piece when the Pawn reaches the last row */ 
     public void promotePawn(char pieceToBecome) {
         switch (pieceToBecome) {
             case 'N':
-                Board.setPosition(getFile(), getRank(), new Knight(getPosition(), isWhite()).promoteSetup());
+                getBoard().setPosition(getFile(), getRank(), new Knight(getPosition(), isWhite()).promoteSetup());
                 break;
             case 'B':
-                Board.setPosition(getFile(), getRank(), new Bishop(getPosition(), isWhite()).promoteSetup());
+                getBoard().setPosition(getFile(), getRank(), new Bishop(getPosition(), isWhite()).promoteSetup());
                 break;
             case 'R':
-                Board.setPosition(getFile(), getRank(), new Rook(getPosition(), isWhite()).promoteSetup());
+                getBoard().setPosition(getFile(), getRank(), new Rook(getPosition(), isWhite()).promoteSetup());
                 break;
             default:
-                Board.setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()).promoteSetup());
+                getBoard().setPosition(getFile(), getRank(), new Queen(getPosition(), isWhite()).promoteSetup());
                 break;
         }
     }
@@ -88,7 +90,11 @@ public class Pawn extends Piece {
         if (movingTwo)
         {
             PhantomPawn phantom = new PhantomPawn(this);
-            Board.setPosition(getFile(), getRank() + (isWhite() ? -1 : 1), phantom);
+            getBoard().setPosition(getFile(), getRank() + (isWhite() ? -1 : 1), phantom);
         }
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new Pawn(getPosition(), isWhite()).setBoard(board);
     }
 }

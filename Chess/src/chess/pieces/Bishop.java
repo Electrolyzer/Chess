@@ -1,4 +1,5 @@
 package chess.pieces;
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -33,10 +34,10 @@ public class Bishop extends Piece{
                 //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds
                 while (0<=rank && rank<8 && 0<=file && file<8) {
 
-                    if (null == Board.getPosition(file, rank) || Board.getPosition(file, rank) instanceof PhantomPawn) {
+                    if (null == getBoard().getPosition(file, rank) || getBoard().getPosition(file, rank) instanceof PhantomPawn) {
                         validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
-                    } else if (!isSameColor(Board.getPosition(file, rank))) {
+                    } else if (!isSameColor(getBoard().getPosition(file, rank))) {
                         validMoves.setPosition(file,rank, moveType.VALID);
                         distance = 1;
                         break;
@@ -50,6 +51,10 @@ public class Bishop extends Piece{
 
             }
         }
+        updateValidMovesCheck();
+    }
 
+    public Piece copyToBoard(Board<Piece> board) {
+        return new Bishop(getPosition(), isWhite()).setBoard(board);
     }
 }

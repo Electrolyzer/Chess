@@ -62,38 +62,36 @@ public class moveParser {
                 break;
             case ENPASSANT:
                 executeMove(move);
-                Piece.Board.setPosition(move[1].getFile(), move[0].getRank(), null); //Delete the Pawn that was En Passanted
+                Piece.DefaultBoard.setPosition(move[1].getFile(), move[0].getRank(), null); //Delete the Pawn that was En Passanted
                 break;
             case PROMOTE:
                 executeMove(move);
                 promotePawn(move[1], pieceToBecome); //Change pawn after movement
                 break;
         }        
-        return null;
+        return Board.isInCheck(Piece.DefaultBoard, true) || Board.isInCheck(Piece.DefaultBoard, false) ? Message.CHECK : null;
     }
 
 
     public static void executeMove(Square[] move){
-        Piece pieceToMove = Piece.Board.getPosition(move[0]);
+        Piece pieceToMove = Piece.DefaultBoard.getPosition(move[0]);
         pieceToMove.move(move[1]);
-        Piece.Board.setPosition(move[1], pieceToMove);
-        Piece.Board.setPosition(move[0], null);
         updateLoop();
     }
 
     public static void promotePawn(Square pawnPos, char pieceToBecome){
-        Pawn pawn = (Pawn)Piece.Board.getPosition(pawnPos);  
+        Pawn pawn = (Pawn)Piece.DefaultBoard.getPosition(pawnPos);  
         pawn.promotePawn(pieceToBecome);
     }
 
     public static moveType checkMoveValidity(Square[] move, boolean curPlayer){
-        if(Piece.Board.getPosition(move[0]) == null) return moveType.INVALID;
-        if(Piece.Board.getPosition(move[0]).isWhite() != curPlayer) return moveType.INVALID;
-        return Piece.Board.getPosition(move[0]).isValidMove(move[1]);
+        if(Piece.DefaultBoard.getPosition(move[0]) == null) return moveType.INVALID;
+        if(Piece.DefaultBoard.getPosition(move[0]).isWhite() != curPlayer) return moveType.INVALID;
+        return Piece.DefaultBoard.getPosition(move[0]).isValidMove(move[1]);
     }
 
     public static void updateLoop(){
-        for(Piece piece : Piece.Board){
+        for(Piece piece : Piece.DefaultBoard){
 			if(piece == null) { continue; }
 			piece.updateValidMoves();;
 		}

@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -32,5 +33,9 @@ public class PhantomPawn extends Piece {
 
     public Pawn getLinkedPawn() {
         return _linkedPawn;
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new PhantomPawn((Pawn)_linkedPawn.copyToBoard(board));
     }
 }
