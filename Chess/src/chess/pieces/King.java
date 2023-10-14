@@ -48,9 +48,10 @@ public class King extends Piece {
 
             }
         }
+        updateValidMovesCheck();
 
         // Handle castling.
-        if (!hasMoved())
+        if (!hasMoved() && !Board.isInCheck(DefaultBoard, isWhite()))
         {
             for (Piece piece : getBoard())
             {
@@ -72,7 +73,7 @@ public class King extends Piece {
                 else if (piece.getFile() > getFile() 
                     && isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
                     && getBoard().getPosition(getFile() + 1, getRank()) == null  //Make sure the next two squares are empty for RH castle
-                    && getBoard().getPosition(getFile() - 2, getRank()) == null)
+                    && getBoard().getPosition(getFile() + 2, getRank()) == null)
                     validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
             }
         }

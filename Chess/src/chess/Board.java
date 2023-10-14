@@ -147,4 +147,13 @@ public class Board<T> implements Iterable<T> {
 
         return false;
     }
+
+    public static boolean anyValidMoves(List<Board<Piece.moveType>> validMoveLists) {
+        for (Board<Piece.moveType> board : validMoveLists) {
+            for (Piece.moveType move : board) {
+                if (move != Piece.moveType.INVALID) return true;
+            }
+        }
+        return false;
+    }
 }
