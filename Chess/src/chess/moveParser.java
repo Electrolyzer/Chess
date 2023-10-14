@@ -69,7 +69,7 @@ public class moveParser {
                 promotePawn(move[1], pieceToBecome); //Change pawn after movement
                 break;
         }        
-        return null;
+        return Board.isInCheck(Piece.Board, true) || Board.isInCheck(Piece.Board, false) ? Message.CHECK : null;
     }
 
 

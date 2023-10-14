@@ -101,7 +101,7 @@ public class Board<T> implements Iterable<T> {
                 Piece pieceAtSquare = board.getPosition(currentSquare);
                 boolean kingsMoveAway = true;
                 boolean blockedByEdge = true;
-                while (i >= 0 && i < 8 && j >= 0 && j < 8) {
+                while (file >= 0 && file < 8 && rank >= 0 && rank < 8) {
                     pieceAtSquare = board.getPosition(file, rank);
                     if (!(pieceAtSquare == null || pieceAtSquare instanceof PhantomPawn))
                     {
@@ -138,7 +138,7 @@ public class Board<T> implements Iterable<T> {
 
                 //Checks whether the space is occupied by an enemy knight.
                 Piece pieceAtSquare = board.getPosition(file, rank);
-                if (!pieceAtSquare.isSameColor(king) && pieceAtSquare instanceof Knight)
+                if (pieceAtSquare != null && !pieceAtSquare.isSameColor(king) && pieceAtSquare instanceof Knight)
                     return true; 
             }
         }
