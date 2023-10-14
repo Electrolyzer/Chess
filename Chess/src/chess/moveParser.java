@@ -54,10 +54,10 @@ public class moveParser {
             case CASTLE: 
                 executeMove(move);
                 if(move[1].getFile() > move[0].getFile()){
-                    Square[] rookMove = {new Square(8, move[1].getRank()), new Square(6, move[1].getRank())};
+                    Square[] rookMove = {new Square(7, move[1].getRank()), new Square(5, move[1].getRank())};
                     executeMove(rookMove);
                 }else{
-                    Square[] rookMove = {new Square(1, move[1].getRank()), new Square(4, move[1].getRank())};
+                    Square[] rookMove = {new Square(0, move[1].getRank()), new Square(3, move[1].getRank())};
                     executeMove(rookMove);
                 }
                 break;
