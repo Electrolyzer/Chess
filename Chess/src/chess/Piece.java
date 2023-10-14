@@ -79,9 +79,8 @@ public abstract class Piece {
 
     private boolean isInCheckAfterMove(Square destination) {
         Board<Piece> copy = Board.deepCopy(_board);
-        
-        copy.setPosition(destination, this);
-        copy.setPosition(_position, null);
+        Piece copiedPiece = copy.getPosition(getPosition());
+        copiedPiece.move(destination);
         return Board.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
     }
 
