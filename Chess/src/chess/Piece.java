@@ -5,7 +5,8 @@ import chess.pieces.PhantomPawn;
 /** Abstract base class for all pieces. */
 public abstract class Piece {
     /** The board shared for all Pieces */
-    public static Board<Piece> Board; // = new Board<Piece>();
+    private Board<Piece> _board; 
+    public static final Board<Piece> DefaultBoard = new Board<Piece>();
 
     private Square _position;
     private boolean _isWhite;
@@ -18,6 +19,7 @@ public abstract class Piece {
     public Piece(Square position, boolean isWhite) {
         _position = position;
         _isWhite = isWhite;
+        _board = DefaultBoard;
         validMoves = new Board<moveType>();
     }
 
@@ -29,13 +31,13 @@ public abstract class Piece {
     }
 
     public void move(Square destination){
-        Piece.Board.setPosition(destination, this);
-        Piece.Board.setPosition(_position, null);
+        _board.setPosition(destination, this);
+        _board.setPosition(_position, null);
         _hasMoved = true;
         _position = destination;
-        for (Piece piece : Board) {
+        for (Piece piece : _board) {
             if (piece instanceof PhantomPawn) {
-                Board.setPosition(piece.getFile(), piece.getRank(), null);
+                _board.setPosition(piece.getFile(), piece.getRank(), null);
             }
         }
     }
@@ -58,6 +60,9 @@ public abstract class Piece {
     /** Returns the position of the piece. */
     protected Square getPosition() { return _position; }
 
+    /** Returns the board the piece is on. */
+    public Board<Piece> getBoard() { return _board; }
+
     /** Returns whether or not the piece is white. */
     public boolean isWhite() { return _isWhite; }
 
@@ -67,22 +72,17 @@ public abstract class Piece {
     public abstract String getType();
 
     private boolean isInCheckAfterMove(Square destination) {
-        Board<Piece> copy = new Board<Piece>(Board);
+        Board<Piece> copy = new Board<Piece>(_board);
         
         copy.setPosition(destination, this);
         copy.setPosition(_position, null);
-        return copy.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
+        return Board.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
     }
 
     static int counter = 0;
     protected void updateValidMovesCheck() {
-        //System.out.println(getType());
         Square s = new Square(0, 0);
-        int count = 0;
         while (true) {
-            //System.out.println("(" + s.getFile() + ", " + s.getRank() + ")");
-            //System.out.println(validMoves.getPosition(s));
-            //System.out.println(Board.getPosition(s) == null ? "" : Board.getPosition(s).getType());
             if (validMoves.getPosition(s) != moveType.INVALID && isInCheckAfterMove(s))
                 validMoves.setPosition(s, moveType.INVALID);
             s = s.getNextSquare();

@@ -36,10 +36,10 @@ public class Rook extends Piece{
                 //after hitting a piece whether or not it is. 
                 while (0<=rank && rank<8 && 0<=file && file<8) {
 
-                    if (null == Board.getPosition(file, rank) || Board.getPosition(file, rank) instanceof PhantomPawn) {
+                    if (null == getBoard().getPosition(file, rank) || getBoard().getPosition(file, rank) instanceof PhantomPawn) {
                         validMoves.setPosition(file, rank, moveType.VALID);
                         distance++;
-                    } else if (!isSameColor(Board.getPosition(file, rank))) {
+                    } else if (!isSameColor(getBoard().getPosition(file, rank))) {
                         validMoves.setPosition(file,rank, moveType.VALID);
                         distance = 1;
                         break;

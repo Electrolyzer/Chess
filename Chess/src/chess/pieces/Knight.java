@@ -35,9 +35,9 @@ public class Knight extends Piece {
                 if(file<0 || file>7 || rank<0 || rank>7){ continue; }
 
                 //Checks whether the space is occupied or has a capturable piece
-                if (null == Board.getPosition(file, rank) || Board.getPosition(file, rank) instanceof PhantomPawn) {
+                if (null == getBoard().getPosition(file, rank) || getBoard().getPosition(file, rank) instanceof PhantomPawn) {
                     validMoves.setPosition(file, rank, moveType.VALID);
-                } else if (!isSameColor(Board.getPosition(file, rank))) {
+                } else if (!isSameColor(getBoard().getPosition(file, rank))) {
                     validMoves.setPosition(file, rank, moveType.VALID);
                 }
 

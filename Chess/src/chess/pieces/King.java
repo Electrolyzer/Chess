@@ -37,11 +37,11 @@ public class King extends Piece {
                 if(file<0 || file>7 || rank<0 || rank>7){ continue; }
 
                 // Checks each direction for valid movement
-                Piece piece = Board.getPosition(getFile() + up, getRank() + right);
+                Piece piece = getBoard().getPosition(getFile() + up, getRank() + right);
                 if (null == piece || piece instanceof PhantomPawn) {
                     validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
                     continue;
-                } else if (!isSameColor(Board.getPosition(getFile() + up, getRank() + right))) {
+                } else if (!isSameColor(getBoard().getPosition(getFile() + up, getRank() + right))) {
                     validMoves.setPosition(getFile() + up, getRank() + right, moveType.VALID);
                 }
 
@@ -51,7 +51,7 @@ public class King extends Piece {
         // Handle castling.
         if (!hasMoved())
         {
-            for (Piece piece : Board)
+            for (Piece piece : getBoard())
             {
                 //Make sure the other piece is a rook of the same color that hasn't moved
                 if (!(piece instanceof Rook)) 
@@ -64,14 +64,14 @@ public class King extends Piece {
                 //Check which direction the castling is happening in
                 if (piece.getFile() < getFile() 
                     && isValidMove(new Square(getFile() - 1, getRank())) != moveType.INVALID  //Make sure the king is not in check in the next square
-                    && Board.getPosition(getFile() - 1, getRank()) == null  //Make sure the next three squares are empty for LH castle
-                    && Board.getPosition(getFile() - 2, getRank()) == null
-                    && Board.getPosition(getFile() - 3, getRank()) == null)
+                    && getBoard().getPosition(getFile() - 1, getRank()) == null  //Make sure the next three squares are empty for LH castle
+                    && getBoard().getPosition(getFile() - 2, getRank()) == null
+                    && getBoard().getPosition(getFile() - 3, getRank()) == null)
                     validMoves.setPosition(getFile() - 2, getRank(), moveType.CASTLE);
                 else if (piece.getFile() > getFile() 
                     && isValidMove(new Square(getFile() + 1, getRank())) != moveType.INVALID
-                    && Board.getPosition(getFile() + 1, getRank()) == null  //Make sure the next two squares are empty for RH castle
-                    && Board.getPosition(getFile() - 2, getRank()) == null)
+                    && getBoard().getPosition(getFile() + 1, getRank()) == null  //Make sure the next two squares are empty for RH castle
+                    && getBoard().getPosition(getFile() - 2, getRank()) == null)
                     validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
             }
         }
