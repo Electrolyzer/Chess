@@ -1,7 +1,8 @@
 package chess;
 import chess.Piece.moveType;
 import chess.pieces.*;
-import chess.ReturnPlay.Message;;
+import chess.ReturnPlay.Message;
+import java.util.ArrayList;
 
 public class moveParser {
     
@@ -68,8 +69,18 @@ public class moveParser {
                 executeMove(move);
                 promotePawn(move[1], pieceToBecome); //Change pawn after movement
                 break;
-        }        
-        return Board.isInCheck(Piece.DefaultBoard, true) || Board.isInCheck(Piece.DefaultBoard, false) ? Message.CHECK : null;
+        }
+
+        ArrayList<Board<moveType>> validMoveLists = new ArrayList<Board<moveType>>(); 
+        for (Piece piece : Piece.DefaultBoard) {
+            if (piece != null && piece.isWhite() != curPlayer)
+                validMoveLists.add(piece.validMoves);
+        }
+        if (!Board.anyValidMoves(validMoveLists))
+            return curPlayer ? Message.CHECKMATE_WHITE_WINS : Message.CHECKMATE_BLACK_WINS;
+        else if (Board.isInCheck(Piece.DefaultBoard, true) || Board.isInCheck(Piece.DefaultBoard, false)) {
+            return Message.CHECK;
+        } else {return null;}
     }
 
 
