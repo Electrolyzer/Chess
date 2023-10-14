@@ -52,5 +52,6 @@ public class Queen extends Piece {
                 }
             }
         }
+        updateValidMovesCheck();
     }
 }

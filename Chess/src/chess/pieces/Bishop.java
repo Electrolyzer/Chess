@@ -50,6 +50,6 @@ public class Bishop extends Piece{
 
             }
         }
-
+        updateValidMovesCheck();
     }
 }

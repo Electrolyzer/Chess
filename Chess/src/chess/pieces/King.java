@@ -75,6 +75,6 @@ public class King extends Piece {
                     validMoves.setPosition(getFile() + 2, getRank(), moveType.CASTLE);
             }
         }
-
+        updateValidMovesCheck();
     }
 }

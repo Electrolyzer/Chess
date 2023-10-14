@@ -93,6 +93,7 @@ public class Board<T> implements Iterable<T> {
         // Loop over the 8 directions.
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue;
                 boolean ortho = i == 0 || j == 0;
                 boolean isForward = isWhite ? j == 1 : j == -1;
                 int file = startFile + i;

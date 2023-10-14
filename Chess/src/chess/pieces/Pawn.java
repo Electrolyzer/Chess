@@ -61,6 +61,7 @@ public class Pawn extends Piece {
                 validMoves.setPosition(i, otherSide, moveType.PROMOTE);
             }
         }
+        updateValidMovesCheck();
     }
 
     /** Transform into the chosen piece when the Pawn reaches the last row */ 

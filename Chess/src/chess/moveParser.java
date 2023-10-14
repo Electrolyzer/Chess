@@ -76,8 +76,6 @@ public class moveParser {
     public static void executeMove(Square[] move){
         Piece pieceToMove = Piece.Board.getPosition(move[0]);
         pieceToMove.move(move[1]);
-        Piece.Board.setPosition(move[1], pieceToMove);
-        Piece.Board.setPosition(move[0], null);
         updateLoop();
     }
 

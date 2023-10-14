@@ -24,10 +24,13 @@ public abstract class Piece {
     /** Returns whether or not moving the piece to the given destination would be valid. 
     */
     public moveType isValidMove(Square destination){
+        
         return validMoves.getPosition(destination);
     }
 
     public void move(Square destination){
+        Piece.Board.setPosition(destination, this);
+        Piece.Board.setPosition(_position, null);
         _hasMoved = true;
         _position = destination;
         for (Piece piece : Board) {
@@ -62,4 +65,29 @@ public abstract class Piece {
     public int getFile() { return _position.getFile(); }
 
     public abstract String getType();
+
+    private boolean isInCheckAfterMove(Square destination) {
+        Board<Piece> copy = new Board<Piece>(Board);
+        
+        copy.setPosition(destination, this);
+        copy.setPosition(_position, null);
+        return copy.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
+    }
+
+    static int counter = 0;
+    protected void updateValidMovesCheck() {
+        //System.out.println(getType());
+        Square s = new Square(0, 0);
+        int count = 0;
+        while (true) {
+            //System.out.println("(" + s.getFile() + ", " + s.getRank() + ")");
+            //System.out.println(validMoves.getPosition(s));
+            //System.out.println(Board.getPosition(s) == null ? "" : Board.getPosition(s).getType());
+            if (validMoves.getPosition(s) != moveType.INVALID && isInCheckAfterMove(s))
+                validMoves.setPosition(s, moveType.INVALID);
+            s = s.getNextSquare();
+            if (s.equals(new Square(0, 0)))
+                break;
+        }
+    }
 }
