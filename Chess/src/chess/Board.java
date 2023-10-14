@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.*;
+import chess.pieces.*;
 
 public class Board<T> implements Iterable<T> {
 
@@ -33,10 +34,6 @@ public class Board<T> implements Iterable<T> {
             }
             Board.add(list);
         }
-    }
-
-    public void move(Square start, Square end) {
-        return;
     }
 
     public T getPosition(Square position){
@@ -76,5 +73,75 @@ public class Board<T> implements Iterable<T> {
                 _isDone = true;
             return value;
         }
+    }
+
+    /** Returns whether or not the king of the specified color is in check. <p>
+      * If there is no king of the specified color, the method returns false.
+      */
+    public static boolean isInCheck(Board<Piece> board, boolean isWhite) {
+        King king = null;
+        for (Piece piece : board) {
+            if (piece != null && piece instanceof King && piece.isWhite() == isWhite) {
+                king = (King) piece;
+                break;
+            }
+        }
+        if (king == null) return false;
+        int startFile = king.getFile();
+        int startRank = king.getRank();
+
+        // Loop over the 8 directions.
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                boolean ortho = i == 0 || j == 0;
+                int file = startFile + i;
+                int rank = startRank + j;
+                Square currentSquare = new Square(0, 0);
+                Piece pieceAtSquare = board.getPosition(currentSquare);
+                boolean kingsMoveAway = true;
+                boolean blockedByEdge = true;
+                while (i >= 0 && i < 8 && j >= 0 && j < 8) {
+                    pieceAtSquare = board.getPosition(file, rank);
+                    if (!(pieceAtSquare == null || pieceAtSquare instanceof PhantomPawn))
+                    {
+                        blockedByEdge = false;
+                        break;
+                    }
+                    file += i;
+                    rank += j;
+                    kingsMoveAway = false;
+                }
+                if (blockedByEdge) continue;
+                if (!pieceAtSquare.isSameColor(king) && (
+                    pieceAtSquare instanceof Queen
+                    || (ortho && pieceAtSquare instanceof Rook)
+                    || (!ortho && pieceAtSquare instanceof Bishop)
+                    || (!ortho && kingsMoveAway && pieceAtSquare instanceof Pawn)
+                    || (kingsMoveAway && pieceAtSquare instanceof King)
+                )) { return true; }
+            }
+        }
+
+        // We have checked all the pieces with the exception of the knight; lets check the knight now.
+        //The two for loops iterate the 8 possible directions
+        for (int up = -2; up <= 2; up ++) {
+            for (int right = -2; right <= 2; right ++) {
+
+                //Only check for valid moves if the taxicab distance is 3
+                if((Math.abs(right)+Math.abs(up)!=3)){ continue; }
+
+                //Ensures knight move is not out of bounds
+                int file = startFile + up;
+                int rank = startRank + right;
+                if(file<0 || file>7 || rank<0 || rank>7){ continue; }
+
+                //Checks whether the space is occupied by an enemy knight.
+                Piece pieceAtSquare = board.getPosition(file, rank);
+                if (!pieceAtSquare.isSameColor(king) && pieceAtSquare instanceof Knight)
+                    return true; 
+            }
+        }
+
+        return false;
     }
 }
