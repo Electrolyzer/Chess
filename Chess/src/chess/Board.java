@@ -94,6 +94,7 @@ public class Board<T> implements Iterable<T> {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 boolean ortho = i == 0 || j == 0;
+                boolean isForward = isWhite ? j == 1 : j == -1;
                 int file = startFile + i;
                 int rank = startRank + j;
                 Square currentSquare = new Square(0, 0);
@@ -116,7 +117,7 @@ public class Board<T> implements Iterable<T> {
                     pieceAtSquare instanceof Queen
                     || (ortho && pieceAtSquare instanceof Rook)
                     || (!ortho && pieceAtSquare instanceof Bishop)
-                    || (!ortho && kingsMoveAway && pieceAtSquare instanceof Pawn)
+                    || (!ortho && kingsMoveAway && isForward && pieceAtSquare instanceof Pawn)
                     || (kingsMoveAway && pieceAtSquare instanceof King)
                 )) { return true; }
             }
