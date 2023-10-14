@@ -1,5 +1,6 @@
 package chess.pieces;
 
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -91,5 +92,9 @@ public class Pawn extends Piece {
             PhantomPawn phantom = new PhantomPawn(this);
             getBoard().setPosition(getFile(), getRank() + (isWhite() ? -1 : 1), phantom);
         }
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new Pawn(getPosition(), isWhite()).setBoard(board);
     }
 }

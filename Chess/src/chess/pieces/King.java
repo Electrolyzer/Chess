@@ -1,4 +1,5 @@
 package chess.pieces;
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -76,5 +77,9 @@ public class King extends Piece {
             }
         }
         updateValidMovesCheck();
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new King(getPosition(), isWhite()).setBoard(board);
     }
 }

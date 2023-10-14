@@ -1,4 +1,5 @@
 package chess.pieces;
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -53,5 +54,9 @@ public class Queen extends Piece {
             }
         }
         updateValidMovesCheck();
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new Queen(getPosition(), isWhite()).setBoard(board);
     }
 }

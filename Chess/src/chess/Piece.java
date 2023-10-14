@@ -23,6 +23,9 @@ public abstract class Piece {
         validMoves = new Board<moveType>();
     }
 
+    /** Creates a copy of the piece with the same properties but on a different Board */
+    public abstract Piece copyToBoard(Board<Piece> board);
+
     /** Returns whether or not moving the piece to the given destination would be valid. 
     */
     public moveType isValidMove(Square destination){
@@ -63,6 +66,9 @@ public abstract class Piece {
     /** Returns the board the piece is on. */
     public Board<Piece> getBoard() { return _board; }
 
+    /** Sets the board the piece is using. Returns the piece. */
+    protected Piece setBoard(Board<Piece> board) { _board = board; return this; }
+
     /** Returns whether or not the piece is white. */
     public boolean isWhite() { return _isWhite; }
 
@@ -72,14 +78,13 @@ public abstract class Piece {
     public abstract String getType();
 
     private boolean isInCheckAfterMove(Square destination) {
-        Board<Piece> copy = new Board<Piece>(_board);
+        Board<Piece> copy = Board.deepCopy(_board);
         
         copy.setPosition(destination, this);
         copy.setPosition(_position, null);
         return Board.isInCheck(copy, isWhite()); // Warning message won't go away bc we named both the type and a variable Board.
     }
 
-    static int counter = 0;
     protected void updateValidMovesCheck() {
         Square s = new Square(0, 0);
         while (true) {

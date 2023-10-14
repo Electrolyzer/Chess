@@ -1,4 +1,5 @@
 package chess.pieces;
+import chess.Board;
 import chess.Piece;
 import chess.Square;
 
@@ -51,5 +52,9 @@ public class Bishop extends Piece{
             }
         }
         updateValidMovesCheck();
+    }
+
+    public Piece copyToBoard(Board<Piece> board) {
+        return new Bishop(getPosition(), isWhite()).setBoard(board);
     }
 }

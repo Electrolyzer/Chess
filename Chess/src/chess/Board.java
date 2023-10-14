@@ -20,22 +20,6 @@ public class Board<T> implements Iterable<T> {
         }
     }
 
-    /** Creates copy of a given board. Mainly for use in checking move results without 
-     * affecting the main board.
-     */
-    public Board(Board<T> boardToCopy){
-        Board = new ArrayList<List<T>>();
-        for (int i = 0; i < 8; i++)
-        {
-            List<T> list = new ArrayList<T>();
-            for (int j = 0; j < 8; j++)
-            {
-                list.add(boardToCopy.getPosition(i, j));
-            }
-            Board.add(list);
-        }
-    }
-
     public T getPosition(Square position){
         return Board.get(position.getFile()).get(position.getRank());
     }
@@ -73,6 +57,23 @@ public class Board<T> implements Iterable<T> {
                 _isDone = true;
             return value;
         }
+    }
+    
+    /** Creates copy of a given board. Mainly for use in checking move results without 
+     * affecting the main board.
+     */
+    public static Board<Piece> deepCopy (Board<Piece> boardToCopy){
+        Board<Piece> newBoard = new Board<Piece>();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                newBoard.setPosition(i, j, 
+                    boardToCopy.getPosition(i, j) == null
+                    ? null
+                    : boardToCopy.getPosition(i, j).copyToBoard(newBoard)
+                );
+            }
+        }
+        return newBoard;
     }
 
     /** Returns whether or not the king of the specified color is in check. <p>
