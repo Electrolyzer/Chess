@@ -14,6 +14,7 @@ public class moveParser {
         int nextSpace;
         char pieceToBecome = '\0';
         Square[] move = new Square[2];
+        boolean isDraw = false;
 
         int counter = 0;
 
@@ -29,8 +30,8 @@ public class moveParser {
                 if(moveToParse.indexOf("resign") != -1){
                     return curPlayer ? Message.RESIGN_BLACK_WINS : Message.RESIGN_WHITE_WINS;
                 }else if(moveToParse.indexOf("draw?") == 0){
-                    executeMove(move);
-                    return Message.DRAW;
+                    isDraw = true;
+                    moveToParse = moveToParse.substring(5);
                 }else if( "BNRQ".indexOf(moveToParse.charAt(0)) != -1){ 
                     pieceToBecome = moveToParse.charAt(0);
                     moveToParse = moveToParse.substring(1);
@@ -70,6 +71,8 @@ public class moveParser {
                 promotePawn(move[1], pieceToBecome); //Change pawn after movement
                 break;
         }
+
+        if (isDraw) return Message.DRAW;
 
         ArrayList<Board<moveType>> validMoveLists = new ArrayList<Board<moveType>>(); 
         for (Piece piece : Piece.DefaultBoard) {
