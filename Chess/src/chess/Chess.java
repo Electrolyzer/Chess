@@ -1,3 +1,5 @@
+// Names: Kyle DiMaggio and Jesse Lerner
+
 package chess;
 
 import java.util.ArrayList;
