@@ -36,6 +36,17 @@ public class Board<T> implements Iterable<T> {
         Board.get(file).set(rank, object);
     }
 
+    public Board<T> reset() {
+        Square s = new Square(0, 0);
+        while (true) {
+            setPosition(s, null);
+            s = s.getNextSquare();
+            if (s.equals(new Square(0, 0)))
+                break;
+        }
+        return this;
+    }
+
     public Iterator<T> iterator()
     {
         return new BoardIterator();

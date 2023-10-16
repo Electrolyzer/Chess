@@ -19,16 +19,14 @@ public class Bishop extends Piece{
                 validMoves.setPosition(i, j, moveType.INVALID);
             }    
         }
-        int distance = 1;
-        int rank = 0;
-        int file = 0;
 
         //The two for loops iterate the 4 possible directions
         for (int up = -1; up <= 1; up += 2) {
             for (int right = -1; right <= 1; right += 2) {
 
-                file = getFile() + right * distance;
-                rank = getRank() + up * distance;
+                int distance = 1;
+                int file = getFile() + right * distance;
+                int rank = getRank() + up * distance;
 
                 //Checks each direction until it hits a piece, then checks whether that piece is capturable but stops
                 //after hitting a piece whether or not it is. While condition ensures piece does not move out of bounds

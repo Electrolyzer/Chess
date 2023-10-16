@@ -50,7 +50,7 @@ public class moveParser {
                 return Message.ILLEGAL_MOVE;
             case VALID:
                 executeMove(move); //Execute move normally
-                System.out.println("valid");
+                //System.out.println("valid");
                 break;
             case CASTLE: 
                 executeMove(move);

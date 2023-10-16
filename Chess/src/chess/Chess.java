@@ -164,7 +164,7 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
-		board = Piece.DefaultBoard;
+		board = Piece.DefaultBoard.reset();
 		Square curPos;
 		playerIsWhite = true;
 
