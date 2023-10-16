@@ -27,12 +27,13 @@ public class Pawn extends Piece {
         int direction = isWhite() ? 1 : -1;
 
         // Classic Pawn movement
-        if ((getBoard().getPosition(getFile(), getRank() + direction)) == null) {
+        if (getRank() + direction <= 7 && getRank() + direction >= 0
+            && (getBoard().getPosition(getFile(), getRank() + direction)) == null) {
             validMoves.setPosition(getFile(), getRank() + direction, moveType.VALID);
         }
 
         // Pawn Capture movement with edge detection
-        if (getFile() < 7) {
+        if (getFile() < 7 && getRank() + direction <= 7 && getRank() + direction >= 0) {
             if(getBoard().getPosition(getFile() + 1, getRank() + direction) != null){
                 if (!isSameColor(getBoard().getPosition(getFile() + 1, getRank() + direction))) {
                     moveType type = getBoard().getPosition(getFile() + 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
@@ -40,7 +41,7 @@ public class Pawn extends Piece {
                 }
             }
         }
-        if (getFile() > 0) {
+        if (getFile() > 0 && getRank() + direction <= 7 && getRank() + direction >= 0) {
             if(getBoard().getPosition(getFile() - 1, getRank() + direction) != null){
                 if (!isSameColor(getBoard().getPosition(getFile() - 1, getRank() + direction))) {
                     moveType type = getBoard().getPosition(getFile() - 1, getRank() + direction) instanceof PhantomPawn ? moveType.ENPASSANT : moveType.VALID;
